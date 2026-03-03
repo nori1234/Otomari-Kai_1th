@@ -726,6 +726,112 @@ box-shadow: 0 4px 16px rgba(255,107,157,0.1);
   function toggleCheck(item) {
     item.classList.toggle('checked');
   }
+
+  // 🌸 桜の花びらアニメーション
+  (function() {
+    const canvas = document.getElementById('sakura-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, petals = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // 花びらの形を描く
+    function drawPetal(ctx, x, y, size, angle, opacity) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.globalAlpha = opacity;
+      // ピンク系ランダムカラー
+      const colors = [
+        'rgba(255,182,193,', 'rgba(255,160,180,',
+        'rgba(255,200,210,', 'rgba(250,150,170,',
+        'rgba(255,210,220,'
+      ];
+      const col = colors[Math.floor(Math.random() * colors.length)];
+      ctx.fillStyle = col + opacity + ')';
+      ctx.beginPath();
+      // 花びら形（ベジェ曲線）
+      ctx.moveTo(0, -size);
+      ctx.bezierCurveTo(size * 0.6, -size * 0.8, size * 0.8, size * 0.2, 0, size);
+      ctx.bezierCurveTo(-size * 0.8, size * 0.2, -size * 0.6, -size * 0.8, 0, -size);
+      ctx.fill();
+      // 花びらの中心線
+      ctx.strokeStyle = 'rgba(255,130,160,' + (opacity * 0.3) + ')';
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      ctx.moveTo(0, -size * 0.9);
+      ctx.lineTo(0, size * 0.9);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function createPetal() {
+      return {
+        x: Math.random() * W,
+        y: -20,
+        size: Math.random() * 6 + 4,
+        speedY: Math.random() * 1.2 + 0.4,
+        speedX: Math.random() * 1.2 - 0.4,
+        angle: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.04,
+        opacity: Math.random() * 0.5 + 0.3,
+        wobble: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.04 + 0.01,
+        color: ['rgba(255,182,193,', 'rgba(255,160,180,', 'rgba(255,200,215,', 'rgba(250,145,168,'][Math.floor(Math.random()*4)]
+      };
+    }
+
+    // 初期花びら生成
+    for (let i = 0; i < 28; i++) {
+      const p = createPetal();
+      p.y = Math.random() * H;
+      petals.push(p);
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      // 新しい花びらをたまに追加
+      if (petals.length < 38 && Math.random() < 0.06) {
+        petals.push(createPetal());
+      }
+
+      petals = petals.filter(p => p.y < H + 30 && p.x > -30 && p.x < W + 30);
+
+      for (const p of petals) {
+        p.wobble += p.wobbleSpeed;
+        p.x += p.speedX + Math.sin(p.wobble) * 0.6;
+        p.y += p.speedY;
+        p.angle += p.rotSpeed;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.globalAlpha = p.opacity;
+        ctx.fillStyle = p.color + p.opacity + ')';
+        ctx.beginPath();
+        const s = p.size;
+        ctx.moveTo(0, -s);
+        ctx.bezierCurveTo(s*0.6, -s*0.8, s*0.8, s*0.2, 0, s);
+        ctx.bezierCurveTo(-s*0.8, s*0.2, -s*0.6, -s*0.8, 0, -s);
+        ctx.fill();
+        ctx.globalAlpha = p.opacity * 0.25;
+        ctx.strokeStyle = 'rgba(220,100,130,1)';
+        ctx.lineWidth = 0.4;
+        ctx.beginPath();
+        ctx.moveTo(0, -s*0.85);
+        ctx.lineTo(0, s*0.85);
+        ctx.stroke();
+        ctx.restore();
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
 </script>
 
 </body>
