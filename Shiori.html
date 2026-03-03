@@ -7,400 +7,88 @@
 <title>おとまり会🩷</title>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --pink: #ff6b9d;
-    --pink2: #ff9cc2;
-    --pink-pale: #fff0f6;
-    --purple: #b388ff;
-    --purple2: #ce93d8;
-    --purple-pale: #f5f0ff;
-    --yellow: #ffd166;
-    --mint: #72d5c0;
-    --mint-pale: #f0fff8;
-    --bg: #fff5f8;
-    --text: #3d1a2a;
-    --text-soft: #b07090;
-  }
-
-- { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-font-family: ‘Zen Maru Gothic’, sans-serif;
-background: linear-gradient(160deg, #ffe8f0 0%, #fdf0f8 40%, #f8eeff 70%, #fff0f8 100%);
-min-height: 100vh;
-padding: 28px 14px 70px;
-position: relative;
-overflow-x: hidden;
-}
-
-#sakura-canvas {
-position: fixed;
-top: 0; left: 0;
-width: 100%; height: 100%;
-pointer-events: none;
-z-index: 0;
-}
-
-.page { max-width: 500px; margin: 0 auto; position: relative; z-index: 1; }
-
-/* ====== HEADER ====== */
-.header {
-text-align: center;
-margin-bottom: 32px;
-animation: popIn 0.65s cubic-bezier(0.34,1.56,0.64,1) both;
-}
-.header-badge {
-display: inline-block;
-background: linear-gradient(135deg, var(–pink), var(–purple));
-color: white;
-font-size: 10px;
-font-weight: 900;
-letter-spacing: 2.5px;
-padding: 5px 18px;
-border-radius: 20px;
-margin-bottom: 10px;
-box-shadow: 0 4px 0 #c04080;
-}
-.main-title {
-font-size: clamp(38px, 10vw, 58px);
-font-weight: 900;
-color: var(–pink);
-text-shadow: 3px 3px 0 #ffc0cb, 6px 6px 0 rgba(255,182,193,0.25);
-line-height: 1.1;
-margin-bottom: 4px;
-}
-.main-sub {
-font-size: 12px;
-color: var(–text-soft);
-letter-spacing: 2px;
-margin-bottom: 10px;
-}
-.header-icons { font-size: 18px; letter-spacing: 8px; opacity: 0.55; }
-
-/* ====== TABS ====== */
-.tabs {
-display: flex;
-gap: 8px;
-margin-bottom: 22px;
-animation: slideUp 0.5s ease 0.2s both;
-}
-
-/* ベーススタイル */
-.tab-btn {
-flex: 1;
-padding: 10px 0;
-border-radius: 16px;
-border: 2.5px solid #ffb3cc;
-background: white;
-font-family: ‘Zen Maru Gothic’, sans-serif;
-font-size: 13px;
-font-weight: 900;
-color: var(–text-soft);
-cursor: pointer;
-transition: all 0.25s cubic-bezier(0.34,1.4,0.64,1);
--webkit-tap-highlight-color: transparent;
-outline: none;
-}
-
-/* 非アクティブ day1：hover */
-.tab-btn:not(.active):hover {
-color: var(–pink);
-background: var(–pink-pale);
-border-color: var(–pink);
-}
-/* 非アクティブ day1：押下 */
-.tab-btn:not(.active):active {
-color: var(–pink);
-background: #ffd6e8;
-border-color: var(–pink);
-}
-
-/* アクティブ day1（初期状態含む） */
-.tab-btn.active {
-background: linear-gradient(135deg, var(–pink), var(–pink2));
-color: white;
-border-color: var(–pink);
-box-shadow: 0 4px 0 #d94f7f, 0 6px 18px rgba(255,107,157,0.3);
-transform: translateY(-2px);
-}
-/* アクティブ day1：hover */
-.tab-btn.active:hover {
-color: white;
-background: linear-gradient(135deg, #ff4d8d, #ff85b3);
-box-shadow: 0 5px 0 #d94f7f, 0 8px 22px rgba(255,107,157,0.4);
-transform: translateY(-3px);
-}
-/* アクティブ day1：押下 */
-.tab-btn.active:active {
-color: white;
-background: linear-gradient(135deg, #e05588, #ff80aa);
-transform: translateY(0px);
-box-shadow: 0 2px 0 #d94f7f, 0 3px 10px rgba(255,107,157,0.3);
-}
-
-/* day2 ベース */
-.tab-btn.day2-btn {
-border-color: #d4aaff;
-color: var(–text-soft);
-}
-/* 非アクティブ day2：hover */
-.tab-btn.day2-btn:not(.active):hover {
-color: #9c27b0;
-background: var(–purple-pale);
-border-color: var(–purple);
-}
-/* 非アクティブ day2：押下 */
-.tab-btn.day2-btn:not(.active):active {
-color: #9c27b0;
-background: #e8d5ff;
-border-color: var(–purple);
-}
-/* アクティブ day2 */
-.tab-btn.day2-btn.active {
-background: linear-gradient(135deg, var(–purple), var(–purple2));
-color: white;
-border-color: var(–purple);
-box-shadow: 0 4px 0 #7c3aed, 0 6px 18px rgba(179,136,255,0.3);
-transform: translateY(-2px);
-}
-/* アクティブ day2：hover */
-.tab-btn.day2-btn.active:hover {
-color: white;
-background: linear-gradient(135deg, #9d6eff, #c97de0);
-box-shadow: 0 5px 0 #7c3aed, 0 8px 22px rgba(179,136,255,0.4);
-transform: translateY(-3px);
-}
-/* アクティブ day2：押下 */
-.tab-btn.day2-btn.active:active {
-color: white;
-background: linear-gradient(135deg, #9966dd, #bb77cc);
-transform: translateY(0px);
-box-shadow: 0 2px 0 #7c3aed, 0 3px 10px rgba(179,136,255,0.3);
-}
-
-/* ====== DAY PANELS ====== */
-.day-panel { display: none; }
-.day-panel.active { display: block; animation: slideUp 0.45s cubic-bezier(0.34,1.3,0.64,1) both; }
-
-/* ====== SECTION HEADER ====== */
-.section-head {
-display: flex;
-align-items: center;
-gap: 10px;
-margin: 20px 0 12px;
-}
-.section-pill {
-font-size: 10px;
-font-weight: 900;
-letter-spacing: 1.5px;
-padding: 4px 14px;
-border-radius: 20px;
-background: var(–pink-pale);
-color: var(–pink);
-border: 1.5px solid #ffb3cc;
-white-space: nowrap;
-}
-.day2 .section-pill { background: var(–purple-pale); color: #9c27b0; border-color: #d4aaff; }
-.section-line { flex: 1; height: 1.5px; background: linear-gradient(90deg, #ffb3cc, transparent); border-radius: 2px; }
-.day2 .section-line { background: linear-gradient(90deg, #d4aaff, transparent); }
-
-/* ====== TIMELINE ====== */
-.timeline { position: relative; padding-left: 26px; }
-.timeline::before {
-content: ‘’;
-position: absolute;
-left: 10px; top: 10px; bottom: 10px;
-width: 3px;
-background: linear-gradient(180deg, #ff9cc2 0%, #ffcce0 60%, #e8d5ff 100%);
-border-radius: 3px;
-}
-.day2 .timeline::before { background: linear-gradient(180deg, #ce93d8 0%, #e1bee7 60%, #c8e6fa 100%); }
-
-/* ====== T-ITEM ====== */
-.t-item {
-display: flex;
-gap: 10px;
-align-items: flex-start;
-position: relative;
-margin-bottom: 8px;
-}
-.t-dot {
-position: absolute;
-left: -22px; top: 14px;
-width: 13px; height: 13px;
-border-radius: 50%;
-background: white;
-border: 3px solid var(–pink2);
-flex-shrink: 0;
-}
-.day2 .t-dot { border-color: var(–purple2); }
-
-.t-time {
-font-size: 10.5px;
-font-weight: 900;
-color: var(–pink);
-min-width: 44px;
-padding-top: 13px;
-letter-spacing: 0.3px;
-white-space: nowrap;
-}
-.day2 .t-time { color: #9c27b0; }
-
-.t-card {
-flex: 1;
-background: white;
-border-radius: 18px;
-padding: 12px 15px 13px;
-box-shadow: 0 4px 18px rgba(255,107,157,0.09), 0 1px 5px rgba(255,107,157,0.06);
-border: 1.5px solid rgba(255,182,193,0.38);
-transition: transform 0.22s;
-margin-bottom: 2px;
-cursor: default;
-}
-.t-card:hover { transform: translateX(4px) scale(1.012); }
-.day2 .t-card { border-color: rgba(209,180,255,0.38); box-shadow: 0 4px 18px rgba(179,136,255,0.1); }
-
-.t-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-.t-emoji { font-size: 21px; line-height: 1; }
-.t-name { font-size: 15px; font-weight: 900; color: var(–text); }
-.t-desc { font-size: 12px; color: var(–text-soft); line-height: 1.65; }
-.day2 .t-desc { color: #9b7ab0; }
-
-/* chips */
-.chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-.chip {
-font-size: 11px; font-weight: 700;
-padding: 3px 10px; border-radius: 20px;
-background: var(–pink-pale); color: var(–pink); border: 1.5px solid #ffb3cc;
-}
-.chip.pur { background: var(–purple-pale); color: #9c27b0; border-color: #d4aaff; }
-.chip.ylw { background: #fffbf0; color: #c97000; border-color: #ffd180; }
-.chip.mnt { background: var(–mint-pale); color: #009688; border-color: #a7f0e0; }
-.chip.gray { background: #f5f5f5; color: #777; border-color: #ddd; }
-
-/* expandable detail */
-.detail-toggle {
-display: inline-flex;
-align-items: center;
-gap: 4px;
-margin-top: 7px;
-font-size: 11px;
-font-weight: 700;
-color: var(–pink);
-cursor: pointer;
-user-select: none;
-background: none;
-border: none;
-font-family: inherit;
-padding: 0;
-}
-.day2 .detail-toggle { color: #9c27b0; }
-.detail-toggle .arrow { transition: transform 0.25s; display: inline-block; }
-.detail-toggle.open .arrow { transform: rotate(180deg); }
-.detail-body {
-max-height: 0;
-overflow: hidden;
-transition: max-height 0.35s ease;
-}
-.detail-body.open { max-height: 400px; }
-.detail-inner {
-margin-top: 10px;
-padding-top: 10px;
-border-top: 1.5px dashed #ffcce0;
-}
-.day2 .detail-inner { border-color: #e1bee7; }
-
-/* mini list */
-.mini-list { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
-.mini-row {
-display: flex; gap: 8px; align-items: flex-start;
-font-size: 11.5px; color: var(–text-soft); line-height: 1.5;
-}
-.mini-row::before { content: ‘✦’; color: var(–pink2); flex-shrink: 0; font-size: 10px; margin-top: 2px; }
-.day2 .mini-row::before { color: var(–purple2); }
-
-/* table inside card */
-.mini-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
-.mini-table th {
-background: var(–pink-pale); color: var(–pink);
-padding: 5px 8px; font-weight: 900; text-align: left; border-radius: 6px 6px 0 0;
-}
-.day2 .mini-table th { background: var(–purple-pale); color: #9c27b0; }
-.mini-table td { padding: 5px 8px; color: var(–text-soft); border-bottom: 1px solid #ffeef5; }
-.day2 .mini-table td { border-color: #ede8f5; }
-.mini-table tr:last-child td { border-bottom: none; }
-
-/* special cards */
-.t-card.end-card {
-background: linear-gradient(135deg, var(–pink), var(–pink2));
-border: none;
-box-shadow: 0 6px 22px rgba(255,107,157,0.38), 0 3px 0 #d94f7f;
-}
-.t-card.end-card .t-name,
-.t-card.end-card .t-desc { color: white; }
-
-/* ====== CHECKLIST CARD ====== */
-.checklist-card {
-background: white;
-border-radius: 20px;
-padding: 16px 18px;
-margin-top: 8px;
-border: 1.5px solid #ffb3cc;
-box-shadow: 0 4px 14px rgba(255,107,157,0.08);
-}
-.checklist-title {
-font-size: 13px; font-weight: 900; color: var(–pink);
-margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
-}
-.check-grid {
-display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
-}
-.check-item {
-display: flex; align-items: flex-start; gap: 7px;
-font-size: 11.5px; color: var(–text); cursor: pointer;
-padding: 5px 8px; border-radius: 10px; transition: background 0.15s;
-user-select: none;
-}
-.check-item:hover { background: var(–pink-pale); }
-.check-box {
-width: 16px; height: 16px; border-radius: 5px;
-border: 2px solid #ffb3cc; flex-shrink: 0; margin-top: 1px;
-display: flex; align-items: center; justify-content: center;
-transition: all 0.2s; background: white;
-}
-.check-item.checked .check-box {
-background: var(–pink); border-color: var(–pink);
-}
-.check-item.checked .check-box::after { content: ‘✓’; color: white; font-size: 10px; font-weight: 900; }
-.check-item.checked .check-label { text-decoration: line-through; color: var(–text-soft); }
-
-/* ====== FOOTER ====== */
-.footer {
-text-align: center; margin-top: 30px;
-animation: popIn 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.4s both;
-}
-.footer-box {
-display: inline-block;
-background: white;
-border: 2.5px dashed #ffb3cc;
-border-radius: 24px;
-padding: 16px 30px;
-font-size: 17px; font-weight: 900; color: var(–pink);
-box-shadow: 0 4px 16px rgba(255,107,157,0.1);
-}
-.footer-box small { display: block; font-size: 10.5px; color: var(–text-soft); font-weight: 500; margin-top: 3px; letter-spacing: 1px; }
-
-@keyframes popIn { from { opacity:0; transform:scale(0.82); } to { opacity:1; transform:scale(1); } }
-@keyframes slideUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+:root{--pink:#ff6b9d;--pink2:#ff9cc2;--pink-pale:#fff0f6;--purple:#b388ff;--purple2:#ce93d8;--purple-pale:#f5f0ff;--yellow:#ffd166;--mint:#72d5c0;--mint-pale:#f0fff8;--text:#3d1a2a;--text-soft:#b07090}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Zen Maru Gothic',sans-serif;background:linear-gradient(160deg,#ffe8f0 0%,#fdf0f8 40%,#f8eeff 70%,#fff0f8 100%);min-height:100vh;padding:28px 14px 70px;position:relative;overflow-x:hidden}
+#sakura-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.page{max-width:500px;margin:0 auto;position:relative;z-index:1}
+.header{text-align:center;margin-bottom:32px;animation:popIn .65s cubic-bezier(.34,1.56,.64,1) both}
+.header-badge{display:inline-block;background:linear-gradient(135deg,#ff6b9d,#b388ff);color:white;font-size:10px;font-weight:900;letter-spacing:2.5px;padding:5px 18px;border-radius:20px;margin-bottom:10px;box-shadow:0 4px 0 #c04080}
+.main-title{font-size:clamp(38px,10vw,58px);font-weight:900;color:#ff6b9d;text-shadow:3px 3px 0 #ffc0cb,6px 6px 0 rgba(255,182,193,.25);line-height:1.1;margin-bottom:4px}
+.main-sub{font-size:12px;color:#b07090;letter-spacing:2px;margin-bottom:10px}
+.header-icons{font-size:18px;letter-spacing:8px;opacity:.55}
+.tabs{display:flex;gap:8px;margin-bottom:22px;animation:slideUp .5s ease .2s both}
+/* ボタン: colorをtransitionに含めない */
+.tab-btn{flex:1;padding:10px 0;border-radius:16px;border:2.5px solid #ffb3cc;background:white;font-family:'Zen Maru Gothic',sans-serif;font-size:13px;font-weight:900;color:#b07090;cursor:pointer;transition:background .2s,border-color .2s,box-shadow .2s,transform .2s;-webkit-tap-highlight-color:transparent;outline:none}
+.tab-btn.day2-btn{border-color:#d4aaff}
+.tab-btn:not(.active):hover{background:#fff0f6;border-color:#ff6b9d;color:#ff6b9d}
+.tab-btn.day2-btn:not(.active):hover{background:#f5f0ff;border-color:#b388ff;color:#9c27b0}
+.day-panel{display:none}
+.day-panel.active{display:block;animation:slideUp .45s cubic-bezier(.34,1.3,.64,1) both}
+.section-head{display:flex;align-items:center;gap:10px;margin:20px 0 12px}
+.section-pill{font-size:10px;font-weight:900;letter-spacing:1.5px;padding:4px 14px;border-radius:20px;background:#fff0f6;color:#ff6b9d;border:1.5px solid #ffb3cc;white-space:nowrap}
+.day2 .section-pill{background:#f5f0ff;color:#9c27b0;border-color:#d4aaff}
+.section-line{flex:1;height:1.5px;background:linear-gradient(90deg,#ffb3cc,transparent);border-radius:2px}
+.day2 .section-line{background:linear-gradient(90deg,#d4aaff,transparent)}
+.timeline{position:relative;padding-left:26px}
+.timeline::before{content:'';position:absolute;left:10px;top:10px;bottom:10px;width:3px;background:linear-gradient(180deg,#ff9cc2 0%,#ffcce0 60%,#e8d5ff 100%);border-radius:3px}
+.day2 .timeline::before{background:linear-gradient(180deg,#ce93d8 0%,#e1bee7 60%,#c8e6fa 100%)}
+.t-item{display:flex;gap:10px;align-items:flex-start;position:relative;margin-bottom:8px}
+.t-dot{position:absolute;left:-22px;top:14px;width:13px;height:13px;border-radius:50%;background:white;border:3px solid #ff9cc2}
+.day2 .t-dot{border-color:#ce93d8}
+.t-time{font-size:10.5px;font-weight:900;color:#ff6b9d;min-width:44px;padding-top:13px;white-space:nowrap}
+.day2 .t-time{color:#9c27b0}
+.t-card{flex:1;background:white;border-radius:18px;padding:12px 15px 13px;box-shadow:0 4px 18px rgba(255,107,157,.09);border:1.5px solid rgba(255,182,193,.38);transition:transform .22s;margin-bottom:2px}
+.t-card:hover{transform:translateX(4px) scale(1.012)}
+.day2 .t-card{border-color:rgba(209,180,255,.38);box-shadow:0 4px 18px rgba(179,136,255,.1)}
+.t-top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.t-emoji{font-size:21px;line-height:1}
+.t-name{font-size:15px;font-weight:900;color:#3d1a2a}
+.t-desc{font-size:12px;color:#b07090;line-height:1.65}
+.day2 .t-desc{color:#9b7ab0}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.chip{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:#fff0f6;color:#ff6b9d;border:1.5px solid #ffb3cc}
+.chip.pur{background:#f5f0ff;color:#9c27b0;border-color:#d4aaff}
+.chip.ylw{background:#fffbf0;color:#c97000;border-color:#ffd180}
+.chip.mnt{background:#f0fff8;color:#009688;border-color:#a7f0e0}
+.detail-toggle{display:inline-flex;align-items:center;gap:4px;margin-top:7px;font-size:11px;font-weight:700;color:#ff6b9d;cursor:pointer;user-select:none;background:none;border:none;font-family:inherit;padding:0}
+.day2 .detail-toggle{color:#9c27b0}
+.detail-toggle .arrow{transition:transform .25s;display:inline-block}
+.detail-toggle.open .arrow{transform:rotate(180deg)}
+.detail-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.detail-body.open{max-height:400px}
+.detail-inner{margin-top:10px;padding-top:10px;border-top:1.5px dashed #ffcce0}
+.day2 .detail-inner{border-color:#e1bee7}
+.mini-list{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.mini-row{display:flex;gap:8px;align-items:flex-start;font-size:11.5px;color:#b07090;line-height:1.5}
+.mini-row::before{content:'✦';color:#ff9cc2;flex-shrink:0;font-size:10px;margin-top:2px}
+.day2 .mini-row::before{color:#ce93d8}
+.mini-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:11px}
+.mini-table th{background:#fff0f6;color:#ff6b9d;padding:5px 8px;font-weight:900;text-align:left}
+.day2 .mini-table th{background:#f5f0ff;color:#9c27b0}
+.mini-table td{padding:5px 8px;color:#b07090;border-bottom:1px solid #ffeef5}
+.mini-table tr:last-child td{border-bottom:none}
+.t-card.end-card{background:linear-gradient(135deg,#ff6b9d,#ff9cc2);border:none;box-shadow:0 6px 22px rgba(255,107,157,.38),0 3px 0 #d94f7f}
+.t-card.end-card .t-name,.t-card.end-card .t-desc{color:white}
+.checklist-card{background:white;border-radius:20px;padding:16px 18px;margin-top:8px;border:1.5px solid #ffb3cc;box-shadow:0 4px 14px rgba(255,107,157,.08)}
+.checklist-title{font-size:13px;font-weight:900;color:#ff6b9d;margin-bottom:12px}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.check-item{display:flex;align-items:flex-start;gap:7px;font-size:11.5px;color:#3d1a2a;cursor:pointer;padding:5px 8px;border-radius:10px;transition:background .15s;user-select:none}
+.check-item:hover{background:#fff0f6}
+.check-box{width:16px;height:16px;border-radius:5px;border:2px solid #ffb3cc;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;background:white}
+.check-item.checked .check-box{background:#ff6b9d;border-color:#ff6b9d}
+.check-item.checked .check-box::after{content:'✓';color:white;font-size:10px;font-weight:900}
+.check-item.checked .check-label{text-decoration:line-through;color:#b07090}
+.footer{text-align:center;margin-top:30px;animation:popIn .7s cubic-bezier(.34,1.56,.64,1) .4s both}
+.footer-box{display:inline-block;background:white;border:2.5px dashed #ffb3cc;border-radius:24px;padding:16px 30px;font-size:17px;font-weight:900;color:#ff6b9d;box-shadow:0 4px 16px rgba(255,107,157,.1)}
+.footer-box small{display:block;font-size:10.5px;color:#b07090;font-weight:500;margin-top:3px;letter-spacing:1px}
+@keyframes popIn{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 </style>
-
 </head>
 <body>
 <canvas id="sakura-canvas"></canvas>
 <div class="page">
-
-  <!-- HEADER -->
-
   <div class="header">
     <div class="header-badge">🩷 SLEEPOVER PLAN 🩷</div>
     <div class="main-title">おとまり会🌙</div>
@@ -408,317 +96,177 @@ box-shadow: 0 4px 16px rgba(255,107,157,0.1);
     <div class="header-icons">⭐ 🌸 💫 🌸 ⭐</div>
   </div>
 
-  <!-- TABS -->
-
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchDay(1)">🌸 1日目</button>
-    <button class="tab-btn day2-btn" onclick="switchDay(2)">☀️ 2日目</button>
+    <button class="tab-btn" id="btn1" onclick="switchDay(1)">🌸 1日目</button>
+    <button class="tab-btn day2-btn" id="btn2" onclick="switchDay(2)">☀️ 2日目</button>
   </div>
 
-  <!-- ===== DAY 1 ===== -->
+  <!-- DAY 1 -->
 
   <div class="day-panel active" id="day1">
+    <div class="section-head"><div class="section-pill">▶ 夕方スタート</div><div class="section-line"></div></div>
+    <div class="timeline">
+      <div class="t-item"><div class="t-dot"></div><div class="t-time">夕方</div>
+        <div class="t-card"><div class="t-top"><div class="t-emoji">🎀</div><div class="t-name">みんな集合！</div></div><div class="t-desc">やっとあえたー！！テンション爆あがり🥹💕</div></div>
+      </div>
+    </div>
 
 ```
-<div class="section-head"><div class="section-pill">▶ 夕方スタート</div><div class="section-line"></div></div>
-<div class="timeline">
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time">夕方</div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">🎀</div><div class="t-name">みんな集合！</div></div>
-      <div class="t-desc">やっとあえたー！！テンション爆あがり🥹💕</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- 夕食 -->
 <div class="section-head"><div class="section-pill">▶ 夕食タイム</div><div class="section-line"></div></div>
 <div class="timeline">
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time">夕食</div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time">夕食</div>
     <div class="t-card">
       <div class="t-top"><div class="t-emoji">🍣</div><div class="t-name">手巻き寿司🎊</div></div>
       <div class="t-desc">自分で好きな具を選んで巻こ〜！創作寿司も作っちゃおw</div>
-      <div class="chips">
-        <span class="chip">🍣 マグロ・サーモン</span>
-        <span class="chip mnt">🥑 アボカド</span>
-        <span class="chip ylw">🧀 クリームチーズ</span>
-        <span class="chip pur">🍗 照り焼きチキン</span>
-      </div>
-      <button class="detail-toggle" onclick="toggleDetail(this)">
-        もっとみる（具材ぜんぶ） <span class="arrow">▼</span>
-      </button>
-      <div class="detail-body">
-        <div class="detail-inner">
-          <div class="mini-list">
-            <div class="mini-row">赤： マグロ・サーモン・カニカマ</div>
-            <div class="mini-row">緑： キュウリ・大葉・アボカド</div>
-            <div class="mini-row">黄： 錦糸卵・たくあん・コーン</div>
-            <div class="mini-row">洋風： クリームチーズ・照り焼きチキン・ツナマヨ</div>
-            <div class="mini-row">🌟 ケーキ風に型抜きして盛り付けてみて！</div>
-          </div>
-        </div>
-      </div>
+      <div class="chips"><span class="chip">🍣 マグロ・サーモン</span><span class="chip mnt">🥑 アボカド</span><span class="chip ylw">🧀 クリームチーズ</span><span class="chip pur">🍗 照り焼きチキン</span></div>
+      <button class="detail-toggle" onclick="toggleDetail(this)">もっとみる（具材ぜんぶ） <span class="arrow">▼</span></button>
+      <div class="detail-body"><div class="detail-inner"><div class="mini-list">
+        <div class="mini-row">赤： マグロ・サーモン・カニカマ</div>
+        <div class="mini-row">緑： キュウリ・大葉・アボカド</div>
+        <div class="mini-row">黄： 錦糸卵・たくあん・コーン</div>
+        <div class="mini-row">洋風： クリームチーズ・照り焼きチキン・ツナマヨ</div>
+        <div class="mini-row">🌟 ケーキ風に型抜きして盛り付けてみて！</div>
+      </div></div></div>
     </div>
   </div>
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time"></div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
     <div class="t-card">
       <div class="t-top"><div class="t-emoji">🍗</div><div class="t-name">唐揚げ・ピンチョス・スープ</div></div>
       <div class="t-desc">映えるピンチョスタワーを作ろ〜📸</div>
-      <div class="chips">
-        <span class="chip ylw">🍗 唐揚げ</span>
-        <span class="chip">🍡 ピンチョス</span>
-        <span class="chip mnt">🍲 スープ</span>
-      </div>
-      <button class="detail-toggle" onclick="toggleDetail(this)">
-        ピンチョスのアイデア <span class="arrow">▼</span>
-      </button>
-      <div class="detail-body">
-        <div class="detail-inner">
-          <div class="mini-list">
-            <div class="mini-row">🍅 ミニトマト＋チーズ＋バジル</div>
-            <div class="mini-row">🥚 うずらの卵＋オリーブ＋ハム</div>
-            <div class="mini-row">🌟 タワーに積み上げると映え最高！</div>
-          </div>
-        </div>
-      </div>
+      <div class="chips"><span class="chip ylw">🍗 唐揚げ</span><span class="chip">🍡 ピンチョス</span><span class="chip mnt">🍲 スープ</span></div>
+      <button class="detail-toggle" onclick="toggleDetail(this)">ピンチョスのアイデア <span class="arrow">▼</span></button>
+      <div class="detail-body"><div class="detail-inner"><div class="mini-list">
+        <div class="mini-row">🍅 ミニトマト＋チーズ＋バジル</div>
+        <div class="mini-row">🥚 うずらの卵＋オリーブ＋ハム</div>
+        <div class="mini-row">🌟 タワーに積み上げると映え最高！</div>
+      </div></div></div>
     </div>
   </div>
-
 </div>
 
-<!-- 夜 -->
 <div class="section-head"><div class="section-pill">▶ 夜のパーティー</div><div class="section-line"></div></div>
 <div class="timeline">
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time"></div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
     <div class="t-card">
       <div class="t-top"><div class="t-emoji">♨️</div><div class="t-name">温泉でまったり〜！</div></div>
       <div class="t-desc">みんなでゆっくり温泉タイム♪日頃の疲れを癒やそ🥰✨</div>
-      <div class="chips">
-        <span class="chip ylw">♨️ 温泉</span>
-        <span class="chip mnt">💆 まったり</span>
-        <span class="chip pur">📸 写真撮影</span>
-      </div>
-      <button class="detail-toggle" onclick="toggleDetail(this)">
-        温泉の楽しみ方 <span class="arrow">▼</span>
-      </button>
-      <div class="detail-body">
-        <div class="detail-inner">
-          <div class="mini-list">
-            <div class="mini-row">🧖 湯上がりにスキンケアしながらまったり</div>
-            <div class="mini-row">🍦 温泉あがりのアイスは最高！</div>
-            <div class="mini-row">📸 浴衣や館内着で写真撮ろ〜</div>
-            <div class="mini-row">💤 のぼせないように休憩もしっかりね</div>
-          </div>
-        </div>
-      </div>
+      <div class="chips"><span class="chip ylw">♨️ 温泉</span><span class="chip mnt">💆 まったり</span><span class="chip pur">📸 写真撮影</span></div>
+      <button class="detail-toggle" onclick="toggleDetail(this)">温泉の楽しみ方 <span class="arrow">▼</span></button>
+      <div class="detail-body"><div class="detail-inner"><div class="mini-list">
+        <div class="mini-row">🧖 湯上がりにスキンケアしながらまったり</div>
+        <div class="mini-row">🍦 温泉あがりのアイスは最高！</div>
+        <div class="mini-row">📸 浴衣や館内着で写真撮ろ〜</div>
+        <div class="mini-row">💤 のぼせないように休憩もしっかりね</div>
+      </div></div></div>
     </div>
   </div>
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time"></div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">🍦</div><div class="t-name">アイスタイム＆語り会🗣️</div></div>
-      <div class="t-desc">温泉あがりにアイス食べながらひみつの話しようw🙏<br>学校では言えないこととかも！</div>
-    </div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
+    <div class="t-card"><div class="t-top"><div class="t-emoji">🍦</div><div class="t-name">アイスタイム＆語り会🗣️</div></div><div class="t-desc">温泉あがりにアイス食べながらひみつの話しようw🙏<br>学校では言えないこととかも！</div></div>
   </div>
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time">夜</div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time">夜</div>
     <div class="t-card">
       <div class="t-top"><div class="t-emoji">🎮</div><div class="t-name">ゲーム＆自由タイム</div></div>
       <div class="t-desc">好きなだけ遊びまくろ〜！推し活グッズ作りもあるよ🩷</div>
-      <div class="chips">
-        <span class="chip">ゲーム🎮</span>
-        <span class="chip pur">ダンス動画撮影📱</span>
-        <span class="chip ylw">推し活グッズ作り✂️</span>
-      </div>
-      <button class="detail-toggle" onclick="toggleDetail(this)">
-        おすすめゲームリスト <span class="arrow">▼</span>
-      </button>
-      <div class="detail-body">
-        <div class="detail-inner">
-          <table class="mini-table">
-            <tr><th>ゲーム</th><th>どんなの？</th></tr>
-            <tr><td>🦑 ドラえもんだらけ</td><td>ハラハラ系バランスゲーム</td></tr>
-            <tr><td>🧩 ウボンゴ</td><td>頭脳系パズル、速さ勝負！</td></tr>
-            <tr><td>🟦 ブロックス</td><td>陣取り戦略ゲーム</td></tr>
-            <tr><td>🃏 ドブル</td><td>反射神経＆爆笑系カード</td></tr>
-            <tr><td>🐧 すみっコぐらし</td><td>みんな大好き、ほっこり系</td></tr>
-          </table>
-        </div>
-      </div>
+      <div class="chips"><span class="chip">ゲーム🎮</span><span class="chip pur">ダンス動画撮影📱</span><span class="chip ylw">推し活グッズ作り✂️</span></div>
+      <button class="detail-toggle" onclick="toggleDetail(this)">おすすめゲームリスト <span class="arrow">▼</span></button>
+      <div class="detail-body"><div class="detail-inner">
+        <table class="mini-table">
+          <tr><th>ゲーム</th><th>どんなの？</th></tr>
+          <tr><td>🦑 ドラえもんだらけ</td><td>ハラハラ系バランスゲーム</td></tr>
+          <tr><td>🧩 ウボンゴ</td><td>頭脳系パズル、速さ勝負！</td></tr>
+          <tr><td>🟦 ブロックス</td><td>陣取り戦略ゲーム</td></tr>
+          <tr><td>🃏 ドブル</td><td>反射神経＆爆笑系カード</td></tr>
+          <tr><td>🐧 すみっコぐらし</td><td>みんな大好き、ほっこり系</td></tr>
+        </table>
+      </div></div>
     </div>
   </div>
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time">就寝</div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">😴</div><div class="t-name">おやすみ〜💤</div></div>
-      <div class="t-desc">ねれなくてもしゃべりながらOKw　静かにね🌙</div>
-    </div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time">就寝</div>
+    <div class="t-card"><div class="t-top"><div class="t-emoji">😴</div><div class="t-name">おやすみ〜💤</div></div><div class="t-desc">ねれなくてもしゃべりながらOKw　静かにね🌙</div></div>
   </div>
-
 </div>
 ```
 
-  </div><!-- /day1 -->
+  </div>
 
-  <!-- ===== DAY 2 ===== -->
+  <!-- DAY 2 -->
 
   <div class="day-panel day2" id="day2">
-
-```
-<div class="section-head day2"><div class="section-pill">▶ 朝スタート</div><div class="section-line"></div></div>
-<div class="timeline day2">
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time">朝食</div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">🥞</div><div class="t-name">朝ごはん☀️</div></div>
-      <div class="t-desc">活動前にしっかりエネルギーチャージ！</div>
-      <div class="chips">
-        <span class="chip ylw">🥞 ホットケーキ</span>
-        <span class="chip mnt">🥣 ポトフ</span>
-        <span class="chip pur">🍓 フルーツ</span>
-      </div>
-      <button class="detail-toggle day2" onclick="toggleDetail(this)">
-        栄養ポイント <span class="arrow">▼</span>
-      </button>
-      <div class="detail-body">
-        <div class="detail-inner day2">
-          <div class="mini-list day2">
+    <div class="section-head day2"><div class="section-pill">▶ 朝スタート</div><div class="section-line"></div></div>
+    <div class="timeline day2">
+      <div class="t-item"><div class="t-dot"></div><div class="t-time">朝食</div>
+        <div class="t-card">
+          <div class="t-top"><div class="t-emoji">🥞</div><div class="t-name">朝ごはん☀️</div></div>
+          <div class="t-desc">活動前にしっかりエネルギーチャージ！</div>
+          <div class="chips"><span class="chip ylw">🥞 ホットケーキ</span><span class="chip mnt">🥣 ポトフ</span><span class="chip pur">🍓 フルーツ</span></div>
+          <button class="detail-toggle day2" onclick="toggleDetail(this)">栄養ポイント <span class="arrow">▼</span></button>
+          <div class="detail-body"><div class="detail-inner day2"><div class="mini-list day2">
             <div class="mini-row day2">🥞 ホットケーキ → 脳のエネルギー源（ブドウ糖）</div>
             <div class="mini-row day2">🥣 ポトフ → ビタミン・ミネラルたっぷり、身体を温める</div>
             <div class="mini-row day2">🍓 フルーツ → ビタミンCで朝から元気！</div>
-          </div>
+          </div></div></div>
         </div>
       </div>
     </div>
-  </div>
 
-</div>
-
+```
 <div class="section-head day2"><div class="section-pill">▶ 午前の部</div><div class="section-line"></div></div>
 <div class="timeline day2">
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time">午前</div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time">午前</div>
     <div class="t-card">
       <div class="t-top"><div class="t-emoji">💄</div><div class="t-name">メイクタイム💅</div></div>
       <div class="t-desc">お花見に備えてかわいくなろ！「似合う色」教え合いっこしようw🪞</div>
-      <div class="chips">
-        <span class="chip pur">メイク💄</span>
-        <span class="chip">ヘアアレンジ💇</span>
-      </div>
-      <button class="detail-toggle day2" onclick="toggleDetail(this)">
-        おすすめヘアアレンジ <span class="arrow">▼</span>
-      </button>
-      <div class="detail-body">
-        <div class="detail-inner day2">
-          <div class="mini-list day2">
-            <div class="mini-row day2">🧅 たまねぎヘア：数ヶ所で結んでふっくらポップに！</div>
-            <div class="mini-row day2">🌀 くるりんぱ：結び目を内側に通すだけで編み込み風</div>
-            <div class="mini-row day2">🌟 三つ編みミックス：細い三つ編みをプラスして華やかに</div>
-            <div class="mini-row day2">🎀 リボン編み込み：カラーエクステ風で非日常感UP！</div>
-          </div>
-        </div>
-      </div>
+      <div class="chips"><span class="chip pur">メイク💄</span><span class="chip">ヘアアレンジ💇</span></div>
+      <button class="detail-toggle day2" onclick="toggleDetail(this)">おすすめヘアアレンジ <span class="arrow">▼</span></button>
+      <div class="detail-body"><div class="detail-inner day2"><div class="mini-list day2">
+        <div class="mini-row day2">🧅 たまねぎヘア：数ヶ所で結んでふっくらポップに！</div>
+        <div class="mini-row day2">🌀 くるりんぱ：結び目を内側に通すだけで編み込み風</div>
+        <div class="mini-row day2">🌟 三つ編みミックス：細い三つ編みをプラスして華やかに</div>
+        <div class="mini-row day2">🎀 リボン編み込み：カラーエクステ風で非日常感UP！</div>
+      </div></div></div>
     </div>
   </div>
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time"></div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
     <div class="t-card">
       <div class="t-top"><div class="t-emoji">🌸</div><div class="t-name">お花見へ行こう！</div></div>
       <div class="t-desc">桜の下でまったりピクニック🌸　映え写真もいっぱい撮ろ〜！</div>
-      <div class="chips">
-        <span class="chip">🌸 お花見</span>
-        <span class="chip ylw">加古川周辺🗺️</span>
-        <span class="chip pur">📸 写真撮影</span>
-      </div>
-      <button class="detail-toggle day2" onclick="toggleDetail(this)">
-        お花見のたのしみ方 <span class="arrow">▼</span>
-      </button>
-      <div class="detail-body">
-        <div class="detail-inner day2">
-          <div class="mini-list day2">
-            <div class="mini-row day2">🌸 桜の木の下でみんなで写真撮ろ！</div>
-            <div class="mini-row day2">🎀 レジャーシート敷いてまったりタイム</div>
-            <div class="mini-row day2">📱 リール動画撮影チャンス！</div>
-            <div class="mini-row day2">🌷 花びらキャッチできたらラッキー！</div>
-          </div>
-        </div>
-      </div>
+      <div class="chips"><span class="chip">🌸 お花見</span><span class="chip ylw">加古川周辺🗺️</span><span class="chip pur">📸 写真撮影</span></div>
+      <button class="detail-toggle day2" onclick="toggleDetail(this)">お花見のたのしみ方 <span class="arrow">▼</span></button>
+      <div class="detail-body"><div class="detail-inner day2"><div class="mini-list day2">
+        <div class="mini-row day2">🌸 桜の木の下でみんなで写真撮ろ！</div>
+        <div class="mini-row day2">🎀 レジャーシート敷いてまったりタイム</div>
+        <div class="mini-row day2">📱 リール動画撮影チャンス！</div>
+        <div class="mini-row day2">🌷 花びらキャッチできたらラッキー！</div>
+      </div></div></div>
     </div>
   </div>
-
 </div>
 
 <div class="section-head day2"><div class="section-pill">▶ お昼・解散</div><div class="section-line"></div></div>
 <div class="timeline day2">
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time">昼食</div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time">昼食</div>
     <div class="t-card">
       <div class="t-top"><div class="t-emoji">🍡</div><div class="t-name">屋台でお昼ごはん🎪</div></div>
       <div class="t-desc">好きなもの好きなだけ食べよ〜！お花見気分で食べ歩きも最高🥹</div>
-      <div class="chips">
-        <span class="chip ylw">🍡 みたらし団子</span>
-        <span class="chip">🥞 クレープ</span>
-        <span class="chip pur">🍢 おでん</span>
-        <span class="chip mnt">🌽 焼きとうもろこし</span>
-      </div>
-      <button class="detail-toggle day2" onclick="toggleDetail(this)">
-        おすすめ屋台メニュー <span class="arrow">▼</span>
-      </button>
-      <div class="detail-body">
-        <div class="detail-inner day2">
-          <div class="mini-list day2">
-            <div class="mini-row day2">🍡 みたらし団子・桜餅 → お花見の定番！</div>
-            <div class="mini-row day2">🥞 クレープ → 好きな具でカスタムして</div>
-            <div class="mini-row day2">🍢 おでん・唐揚げ → ガッツリ食べたい子はこれ</div>
-            <div class="mini-row day2">🍦 桜ソフトクリーム → 映え最強！絶対食べて！</div>
-          </div>
-        </div>
-      </div>
+      <div class="chips"><span class="chip ylw">🍡 みたらし団子</span><span class="chip">🥞 クレープ</span><span class="chip pur">🍢 おでん</span><span class="chip mnt">🌽 焼きとうもろこし</span></div>
+      <button class="detail-toggle day2" onclick="toggleDetail(this)">おすすめ屋台メニュー <span class="arrow">▼</span></button>
+      <div class="detail-body"><div class="detail-inner day2"><div class="mini-list day2">
+        <div class="mini-row day2">🍡 みたらし団子・桜餅 → お花見の定番！</div>
+        <div class="mini-row day2">🥞 クレープ → 好きな具でカスタムして</div>
+        <div class="mini-row day2">🍢 おでん・唐揚げ → ガッツリ食べたい子はこれ</div>
+        <div class="mini-row day2">🍦 桜ソフトクリーム → 映え最強！絶対食べて！</div>
+      </div></div></div>
     </div>
   </div>
-
-  <div class="t-item">
-    <div class="t-dot"></div>
-    <div class="t-time">13:30</div>
-    <div class="t-card end-card">
-      <div class="t-top"><div class="t-emoji">👋</div><div class="t-name">解散〜！またね！</div></div>
-      <div class="t-desc">たのしすぎた〜🥹　また絶対やろうね！！🩷🩷<br>写真はすぐ共有してね！</div>
-    </div>
+  <div class="t-item"><div class="t-dot"></div><div class="t-time">13:30</div>
+    <div class="t-card end-card"><div class="t-top"><div class="t-emoji">👋</div><div class="t-name">解散〜！またね！</div></div><div class="t-desc">たのしすぎた〜🥹　また絶対やろうね！！🩷🩷<br>写真はすぐ共有してね！</div></div>
   </div>
-
 </div>
 
-<!-- 持ち物リスト -->
-<div class="section-head day2" style="margin-top:24px;"><div class="section-pill">▶ 持ちものリスト</div><div class="section-line"></div></div>
+<div class="section-head day2" style="margin-top:24px"><div class="section-pill">▶ 持ちものリスト</div><div class="section-line"></div></div>
 <div class="checklist-card">
   <div class="checklist-title">✦ チェックしながら準備しよ！</div>
-  <div class="check-grid" id="checklist">
+  <div class="check-grid">
     <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">👘 パジャマ</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">👗 翌日の着替え</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🪥 歯ブラシ</span></div>
@@ -733,109 +281,66 @@ box-shadow: 0 4px 16px rgba(255,107,157,0.1);
 </div>
 ```
 
-  </div><!-- /day2 -->
-
-  <!-- FOOTER -->
-
-  <div class="footer">
-    <div class="footer-box">
-      🩷 最高の思い出つくろ〜！ 🩷
-      <small>BEST SLEEPOVER EVER ✨</small>
-    </div>
   </div>
 
-</div><!-- /page -->
+  <div class="footer"><div class="footer-box">🩷 最高の思い出つくろ〜！ 🩷<small>BEST SLEEPOVER EVER ✨</small></div></div>
+</div>
 
 <script>
-  function switchDay(n) {
-    document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('day' + n).classList.add('active');
-    document.querySelectorAll('.tab-btn')[n - 1].classList.add('active');
+// アクティブボタンのスタイルをJSで直接管理（CSS transition/詳細度の問題を完全回避）
+function applyActiveStyle(btn, isDay2) {
+  if (isDay2) {
+    btn.style.cssText += ';background:linear-gradient(135deg,#b388ff,#ce93d8)!important;color:white!important;border-color:#b388ff!important;box-shadow:0 4px 0 #7c4daa,0 6px 18px rgba(179,136,255,.3);transform:translateY(-2px)';
+  } else {
+    btn.style.cssText += ';background:linear-gradient(135deg,#ff6b9d,#ff9cc2)!important;color:white!important;border-color:#ff6b9d!important;box-shadow:0 4px 0 #d94f7f,0 6px 18px rgba(255,107,157,.3);transform:translateY(-2px)';
   }
+}
+function clearActiveStyle(btn) {
+  btn.style.background=''; btn.style.color=''; btn.style.borderColor=''; btn.style.boxShadow=''; btn.style.transform='';
+}
+function switchDay(n) {
+  document.querySelectorAll('.day-panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');clearActiveStyle(b)});
+  document.getElementById('day'+n).classList.add('active');
+  var btn = document.querySelectorAll('.tab-btn')[n-1];
+  btn.classList.add('active');
+  applyActiveStyle(btn, n===2);
+}
+// 初期状態を即時適用（DOMContentLoadedを待たずに実行）
+applyActiveStyle(document.getElementById('btn1'), false);
 
-  function toggleDetail(btn) {
-    btn.classList.toggle('open');
-    const body = btn.nextElementSibling;
-    body.classList.toggle('open');
+function toggleDetail(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+function toggleCheck(item) { item.classList.toggle('checked'); }
+
+// 桜アニメーション
+(function(){
+  var cv=document.getElementById('sakura-canvas'),ctx=cv.getContext('2d'),W,H,ps=[];
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight}
+  resize(); window.addEventListener('resize',resize);
+  var cols=['rgba(255,182,193,','rgba(255,160,180,','rgba(255,200,215,','rgba(250,145,168,'];
+  function np(ry){return{x:Math.random()*W,y:ry?Math.random()*H:-20,sz:Math.random()*6+4,vy:Math.random()*1.2+0.4,vx:Math.random()*1.2-0.4,a:Math.random()*Math.PI*2,ra:(Math.random()-.5)*.04,op:Math.random()*.45+.25,wb:Math.random()*Math.PI*2,ws:Math.random()*.04+.01,c:cols[Math.floor(Math.random()*4)]}}
+  for(var i=0;i<28;i++)ps.push(np(true));
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    if(ps.length<38&&Math.random()<.06)ps.push(np(false));
+    ps=ps.filter(function(p){return p.y<H+30&&p.x>-30&&p.x<W+30});
+    ps.forEach(function(p){
+      p.wb+=p.ws;p.x+=p.vx+Math.sin(p.wb)*.6;p.y+=p.vy;p.a+=p.ra;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.globalAlpha=p.op;
+      ctx.fillStyle=p.c+p.op+')';
+      ctx.beginPath();var s=p.sz;
+      ctx.moveTo(0,-s);ctx.bezierCurveTo(s*.6,-s*.8,s*.8,s*.2,0,s);ctx.bezierCurveTo(-s*.8,s*.2,-s*.6,-s*.8,0,-s);ctx.fill();
+      ctx.globalAlpha=p.op*.25;ctx.strokeStyle='rgba(220,100,130,1)';ctx.lineWidth=.4;
+      ctx.beginPath();ctx.moveTo(0,-s*.85);ctx.lineTo(0,s*.85);ctx.stroke();
+      ctx.restore();
+    });
+    requestAnimationFrame(draw);
   }
-
-  function toggleCheck(item) {
-    item.classList.toggle('checked');
-  }
-
-  // 🌸 桜の花びらアニメーション
-  (function() {
-    const canvas = document.getElementById('sakura-canvas');
-    const ctx = canvas.getContext('2d');
-    let W, H, petals = [];
-
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    function createPetal() {
-      return {
-        x: Math.random() * W,
-        y: -20,
-        size: Math.random() * 6 + 4,
-        speedY: Math.random() * 1.2 + 0.4,
-        speedX: Math.random() * 1.2 - 0.4,
-        angle: Math.random() * Math.PI * 2,
-        rotSpeed: (Math.random() - 0.5) * 0.04,
-        opacity: Math.random() * 0.45 + 0.25,
-        wobble: Math.random() * Math.PI * 2,
-        wobbleSpeed: Math.random() * 0.04 + 0.01,
-        color: ['rgba(255,182,193,', 'rgba(255,160,180,', 'rgba(255,200,215,', 'rgba(250,145,168,'][Math.floor(Math.random() * 4)]
-      };
-    }
-
-    for (let i = 0; i < 28; i++) {
-      const p = createPetal();
-      p.y = Math.random() * H;
-      petals.push(p);
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, W, H);
-      if (petals.length < 38 && Math.random() < 0.06) {
-        petals.push(createPetal());
-      }
-      petals = petals.filter(p => p.y < H + 30 && p.x > -30 && p.x < W + 30);
-
-      for (const p of petals) {
-        p.wobble += p.wobbleSpeed;
-        p.x += p.speedX + Math.sin(p.wobble) * 0.6;
-        p.y += p.speedY;
-        p.angle += p.rotSpeed;
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.angle);
-        ctx.globalAlpha = p.opacity;
-        ctx.fillStyle = p.color + p.opacity + ')';
-        ctx.beginPath();
-        const s = p.size;
-        ctx.moveTo(0, -s);
-        ctx.bezierCurveTo(s * 0.6, -s * 0.8, s * 0.8, s * 0.2, 0, s);
-        ctx.bezierCurveTo(-s * 0.8, s * 0.2, -s * 0.6, -s * 0.8, 0, -s);
-        ctx.fill();
-        ctx.globalAlpha = p.opacity * 0.25;
-        ctx.strokeStyle = 'rgba(220,100,130,1)';
-        ctx.lineWidth = 0.4;
-        ctx.beginPath();
-        ctx.moveTo(0, -s * 0.85);
-        ctx.lineTo(0, s * 0.85);
-        ctx.stroke();
-        ctx.restore();
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-  })();
+  draw();
+})();
 </script>
 
 </body>
