@@ -56,9 +56,7 @@
 
 ```
 .
-├── index.html
-├── style.css
-├── script.js
+├── Shiori.html
 └── README.md
 ```
 
