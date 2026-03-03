@@ -84,6 +84,8 @@ gap: 8px;
 margin-bottom: 22px;
 animation: slideUp 0.5s ease 0.2s both;
 }
+
+/* ベーススタイル */
 .tab-btn {
 flex: 1;
 padding: 10px 0;
@@ -96,9 +98,10 @@ font-weight: 900;
 color: var(–text-soft);
 cursor: pointer;
 transition: all 0.25s cubic-bezier(0.34,1.4,0.64,1);
-/* ホールド中も文字色を保持 */
 -webkit-tap-highlight-color: transparent;
+outline: none;
 }
+
 /* 非アクティブ day1：hover */
 .tab-btn:not(.active):hover {
 color: var(–pink);
@@ -111,7 +114,8 @@ color: var(–pink);
 background: #ffd6e8;
 border-color: var(–pink);
 }
-/* アクティブ day1 */
+
+/* アクティブ day1（初期状態含む） */
 .tab-btn.active {
 background: linear-gradient(135deg, var(–pink), var(–pink2));
 color: white;
@@ -134,7 +138,11 @@ transform: translateY(0px);
 box-shadow: 0 2px 0 #d94f7f, 0 3px 10px rgba(255,107,157,0.3);
 }
 
-.tab-btn.day2-btn { border-color: #d4aaff; }
+/* day2 ベース */
+.tab-btn.day2-btn {
+border-color: #d4aaff;
+color: var(–text-soft);
+}
 /* 非アクティブ day2：hover */
 .tab-btn.day2-btn:not(.active):hover {
 color: #9c27b0;
@@ -153,6 +161,7 @@ background: linear-gradient(135deg, var(–purple), var(–purple2));
 color: white;
 border-color: var(–purple);
 box-shadow: 0 4px 0 #7c3aed, 0 6px 18px rgba(179,136,255,0.3);
+transform: translateY(-2px);
 }
 /* アクティブ day2：hover */
 .tab-btn.day2-btn.active:hover {
@@ -411,7 +420,6 @@ box-shadow: 0 4px 16px rgba(255,107,157,0.1);
   <div class="day-panel active" id="day1">
 
 ```
-<!-- 集合 -->
 <div class="section-head"><div class="section-pill">▶ 夕方スタート</div><div class="section-line"></div></div>
 <div class="timeline">
 
@@ -423,8 +431,6 @@ box-shadow: 0 4px 16px rgba(255,107,157,0.1);
       <div class="t-desc">やっとあえたー！！テンション爆あがり🥹💕</div>
     </div>
   </div>
-
-
 
 </div>
 
@@ -771,36 +777,6 @@ box-shadow: 0 4px 16px rgba(255,107,157,0.1);
     resize();
     window.addEventListener('resize', resize);
 
-    // 花びらの形を描く
-    function drawPetal(ctx, x, y, size, angle, opacity) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(angle);
-      ctx.globalAlpha = opacity;
-      // ピンク系ランダムカラー
-      const colors = [
-        'rgba(255,182,193,', 'rgba(255,160,180,',
-        'rgba(255,200,210,', 'rgba(250,150,170,',
-        'rgba(255,210,220,'
-      ];
-      const col = colors[Math.floor(Math.random() * colors.length)];
-      ctx.fillStyle = col + opacity + ')';
-      ctx.beginPath();
-      // 花びら形（ベジェ曲線）
-      ctx.moveTo(0, -size);
-      ctx.bezierCurveTo(size * 0.6, -size * 0.8, size * 0.8, size * 0.2, 0, size);
-      ctx.bezierCurveTo(-size * 0.8, size * 0.2, -size * 0.6, -size * 0.8, 0, -size);
-      ctx.fill();
-      // 花びらの中心線
-      ctx.strokeStyle = 'rgba(255,130,160,' + (opacity * 0.3) + ')';
-      ctx.lineWidth = 0.5;
-      ctx.beginPath();
-      ctx.moveTo(0, -size * 0.9);
-      ctx.lineTo(0, size * 0.9);
-      ctx.stroke();
-      ctx.restore();
-    }
-
     function createPetal() {
       return {
         x: Math.random() * W,
@@ -810,14 +786,13 @@ box-shadow: 0 4px 16px rgba(255,107,157,0.1);
         speedX: Math.random() * 1.2 - 0.4,
         angle: Math.random() * Math.PI * 2,
         rotSpeed: (Math.random() - 0.5) * 0.04,
-        opacity: Math.random() * 0.5 + 0.3,
+        opacity: Math.random() * 0.45 + 0.25,
         wobble: Math.random() * Math.PI * 2,
         wobbleSpeed: Math.random() * 0.04 + 0.01,
-        color: ['rgba(255,182,193,', 'rgba(255,160,180,', 'rgba(255,200,215,', 'rgba(250,145,168,'][Math.floor(Math.random()*4)]
+        color: ['rgba(255,182,193,', 'rgba(255,160,180,', 'rgba(255,200,215,', 'rgba(250,145,168,'][Math.floor(Math.random() * 4)]
       };
     }
 
-    // 初期花びら生成
     for (let i = 0; i < 28; i++) {
       const p = createPetal();
       p.y = Math.random() * H;
@@ -826,11 +801,9 @@ box-shadow: 0 4px 16px rgba(255,107,157,0.1);
 
     function animate() {
       ctx.clearRect(0, 0, W, H);
-      // 新しい花びらをたまに追加
       if (petals.length < 38 && Math.random() < 0.06) {
         petals.push(createPetal());
       }
-
       petals = petals.filter(p => p.y < H + 30 && p.x > -30 && p.x < W + 30);
 
       for (const p of petals) {
@@ -847,15 +820,15 @@ box-shadow: 0 4px 16px rgba(255,107,157,0.1);
         ctx.beginPath();
         const s = p.size;
         ctx.moveTo(0, -s);
-        ctx.bezierCurveTo(s*0.6, -s*0.8, s*0.8, s*0.2, 0, s);
-        ctx.bezierCurveTo(-s*0.8, s*0.2, -s*0.6, -s*0.8, 0, -s);
+        ctx.bezierCurveTo(s * 0.6, -s * 0.8, s * 0.8, s * 0.2, 0, s);
+        ctx.bezierCurveTo(-s * 0.8, s * 0.2, -s * 0.6, -s * 0.8, 0, -s);
         ctx.fill();
         ctx.globalAlpha = p.opacity * 0.25;
         ctx.strokeStyle = 'rgba(220,100,130,1)';
         ctx.lineWidth = 0.4;
         ctx.beginPath();
-        ctx.moveTo(0, -s*0.85);
-        ctx.lineTo(0, s*0.85);
+        ctx.moveTo(0, -s * 0.85);
+        ctx.lineTo(0, s * 0.85);
         ctx.stroke();
         ctx.restore();
       }
