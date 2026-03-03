@@ -1,0 +1,652 @@
+<!DOCTYPE html><html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おとまり会🩷</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #ff6b9d;
+    --pink2: #ff9cc2;
+    --pink-pale: #fff0f6;
+    --purple: #b388ff;
+    --purple2: #ce93d8;
+    --purple-pale: #f5f0ff;
+    --yellow: #ffd166;
+    --mint: #72d5c0;
+    --mint-pale: #f0fff8;
+    --bg: #fff5f8;
+    --text: #3d1a2a;
+    --text-soft: #b07090;
+  }	∙	{ margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: ‘Zen Maru Gothic’, sans-serif;
+background: var(–bg);
+background-image:
+radial-gradient(circle at 10% 5%, rgba(255,107,157,0.18) 0%, transparent 35%),
+radial-gradient(circle at 90% 95%, rgba(179,136,255,0.15) 0%, transparent 35%),
+radial-gradient(circle at 85% 10%, rgba(255,209,102,0.12) 0%, transparent 28%);
+min-height: 100vh;
+padding: 28px 14px 70px;
+}
+.page { max-width: 500px; margin: 0 auto; }
+/* ====== HEADER ====== */
+.header {
+text-align: center;
+margin-bottom: 32px;
+animation: popIn 0.65s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.header-badge {
+display: inline-block;
+background: linear-gradient(135deg, var(–pink), var(–purple));
+color: white;
+font-size: 10px;
+font-weight: 900;
+letter-spacing: 2.5px;
+padding: 5px 18px;
+border-radius: 20px;
+margin-bottom: 10px;
+box-shadow: 0 4px 0 #c04080;
+}
+.main-title {
+font-size: clamp(38px, 10vw, 58px);
+font-weight: 900;
+color: var(–pink);
+text-shadow: 3px 3px 0 #ffc0cb, 6px 6px 0 rgba(255,182,193,0.25);
+line-height: 1.1;
+margin-bottom: 4px;
+}
+.main-sub {
+font-size: 12px;
+color: var(–text-soft);
+letter-spacing: 2px;
+margin-bottom: 10px;
+}
+.header-icons { font-size: 18px; letter-spacing: 8px; opacity: 0.55; }
+/* ====== TABS ====== */
+.tabs {
+display: flex;
+gap: 8px;
+margin-bottom: 22px;
+animation: slideUp 0.5s ease 0.2s both;
+}
+.tab-btn {
+flex: 1;
+padding: 10px 0;
+border-radius: 16px;
+border: 2.5px solid #ffb3cc;
+background: white;
+font-family: ‘Zen Maru Gothic’, sans-serif;
+font-size: 13px;
+font-weight: 900;
+color: var(–text-soft);
+cursor: pointer;
+transition: all 0.25s cubic-bezier(0.34,1.4,0.64,1);
+}
+.tab-btn.active {
+background: linear-gradient(135deg, var(–pink), var(–pink2));
+color: white;
+border-color: var(–pink);
+box-shadow: 0 4px 0 #d94f7f, 0 6px 18px rgba(255,107,157,0.3);
+transform: translateY(-2px);
+}
+.tab-btn.day2-btn { border-color: #d4aaff; }
+.tab-btn.day2-btn.active {
+background: linear-gradient(135deg, var(–purple), var(–purple2));
+border-color: var(–purple);
+box-shadow: 0 4px 0 #7c3aed, 0 6px 18px rgba(179,136,255,0.3);
+}
+/* ====== DAY PANELS ====== */
+.day-panel { display: none; }
+.day-panel.active { display: block; animation: slideUp 0.45s cubic-bezier(0.34,1.3,0.64,1) both; }
+/* ====== SECTION HEADER ====== */
+.section-head {
+display: flex;
+align-items: center;
+gap: 10px;
+margin: 20px 0 12px;
+}
+.section-pill {
+font-size: 10px;
+font-weight: 900;
+letter-spacing: 1.5px;
+padding: 4px 14px;
+border-radius: 20px;
+background: var(–pink-pale);
+color: var(–pink);
+border: 1.5px solid #ffb3cc;
+white-space: nowrap;
+}
+.day2 .section-pill { background: var(–purple-pale); color: #9c27b0; border-color: #d4aaff; }
+.section-line { flex: 1; height: 1.5px; background: linear-gradient(90deg, #ffb3cc, transparent); border-radius: 2px; }
+.day2 .section-line { background: linear-gradient(90deg, #d4aaff, transparent); }
+/* ====== TIMELINE ====== */
+.timeline { position: relative; padding-left: 26px; }
+.timeline::before {
+content: ‘’;
+position: absolute;
+left: 10px; top: 10px; bottom: 10px;
+width: 3px;
+background: linear-gradient(180deg, #ff9cc2 0%, #ffcce0 60%, #e8d5ff 100%);
+border-radius: 3px;
+}
+.day2 .timeline::before { background: linear-gradient(180deg, #ce93d8 0%, #e1bee7 60%, #c8e6fa 100%); }
+/* ====== T-ITEM ====== */
+.t-item {
+display: flex;
+gap: 10px;
+align-items: flex-start;
+position: relative;
+margin-bottom: 8px;
+}
+.t-dot {
+position: absolute;
+left: -22px; top: 14px;
+width: 13px; height: 13px;
+border-radius: 50%;
+background: white;
+border: 3px solid var(–pink2);
+flex-shrink: 0;
+}
+.day2 .t-dot { border-color: var(–purple2); }
+.t-time {
+font-size: 10.5px;
+font-weight: 900;
+color: var(–pink);
+min-width: 44px;
+padding-top: 13px;
+letter-spacing: 0.3px;
+white-space: nowrap;
+}
+.day2 .t-time { color: #9c27b0; }
+.t-card {
+flex: 1;
+background: white;
+border-radius: 18px;
+padding: 12px 15px 13px;
+box-shadow: 0 4px 18px rgba(255,107,157,0.09), 0 1px 5px rgba(255,107,157,0.06);
+border: 1.5px solid rgba(255,182,193,0.38);
+transition: transform 0.22s;
+margin-bottom: 2px;
+cursor: default;
+}
+.t-card:hover { transform: translateX(4px) scale(1.012); }
+.day2 .t-card { border-color: rgba(209,180,255,0.38); box-shadow: 0 4px 18px rgba(179,136,255,0.1); }
+.t-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.t-emoji { font-size: 21px; line-height: 1; }
+.t-name { font-size: 15px; font-weight: 900; color: var(–text); }
+.t-desc { font-size: 12px; color: var(–text-soft); line-height: 1.65; }
+.day2 .t-desc { color: #9b7ab0; }
+/* chips */
+.chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.chip {
+font-size: 11px; font-weight: 700;
+padding: 3px 10px; border-radius: 20px;
+background: var(–pink-pale); color: var(–pink); border: 1.5px solid #ffb3cc;
+}
+.chip.pur { background: var(–purple-pale); color: #9c27b0; border-color: #d4aaff; }
+.chip.ylw { background: #fffbf0; color: #c97000; border-color: #ffd180; }
+.chip.mnt { background: var(–mint-pale); color: #009688; border-color: #a7f0e0; }
+.chip.gray { background: #f5f5f5; color: #777; border-color: #ddd; }
+/* expandable detail */
+.detail-toggle {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+margin-top: 7px;
+font-size: 11px;
+font-weight: 700;
+color: var(–pink);
+cursor: pointer;
+user-select: none;
+background: none;
+border: none;
+font-family: inherit;
+padding: 0;
+}
+.day2 .detail-toggle { color: #9c27b0; }
+.detail-toggle .arrow { transition: transform 0.25s; display: inline-block; }
+.detail-toggle.open .arrow { transform: rotate(180deg); }
+.detail-body {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.35s ease;
+}
+.detail-body.open { max-height: 400px; }
+.detail-inner {
+margin-top: 10px;
+padding-top: 10px;
+border-top: 1.5px dashed #ffcce0;
+}
+.day2 .detail-inner { border-color: #e1bee7; }
+/* mini list */
+.mini-list { display: flex; flex-direction: column; gap: 5px; margin-top: 6px; }
+.mini-row {
+display: flex; gap: 8px; align-items: flex-start;
+font-size: 11.5px; color: var(–text-soft); line-height: 1.5;
+}
+.mini-row::before { content: ‘✦’; color: var(–pink2); flex-shrink: 0; font-size: 10px; margin-top: 2px; }
+.day2 .mini-row::before { color: var(–purple2); }
+/* table inside card */
+.mini-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
+.mini-table th {
+background: var(–pink-pale); color: var(–pink);
+padding: 5px 8px; font-weight: 900; text-align: left; border-radius: 6px 6px 0 0;
+}
+.day2 .mini-table th { background: var(–purple-pale); color: #9c27b0; }
+.mini-table td { padding: 5px 8px; color: var(–text-soft); border-bottom: 1px solid #ffeef5; }
+.day2 .mini-table td { border-color: #ede8f5; }
+.mini-table tr:last-child td { border-bottom: none; }
+/* special cards */
+.t-card.end-card {
+background: linear-gradient(135deg, var(–pink), var(–pink2));
+border: none;
+box-shadow: 0 6px 22px rgba(255,107,157,0.38), 0 3px 0 #d94f7f;
+}
+.t-card.end-card .t-name,
+.t-card.end-card .t-desc { color: white; }
+/* ====== CHECKLIST CARD ====== */
+.checklist-card {
+background: white;
+border-radius: 20px;
+padding: 16px 18px;
+margin-top: 8px;
+border: 1.5px solid #ffb3cc;
+box-shadow: 0 4px 14px rgba(255,107,157,0.08);
+}
+.checklist-title {
+font-size: 13px; font-weight: 900; color: var(–pink);
+margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+}
+.check-grid {
+display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+}
+.check-item {
+display: flex; align-items: flex-start; gap: 7px;
+font-size: 11.5px; color: var(–text); cursor: pointer;
+padding: 5px 8px; border-radius: 10px; transition: background 0.15s;
+user-select: none;
+}
+.check-item:hover { background: var(–pink-pale); }
+.check-box {
+width: 16px; height: 16px; border-radius: 5px;
+border: 2px solid #ffb3cc; flex-shrink: 0; margin-top: 1px;
+display: flex; align-items: center; justify-content: center;
+transition: all 0.2s; background: white;
+}
+.check-item.checked .check-box {
+background: var(–pink); border-color: var(–pink);
+}
+.check-item.checked .check-box::after { content: ‘✓’; color: white; font-size: 10px; font-weight: 900; }
+.check-item.checked .check-label { text-decoration: line-through; color: var(–text-soft); }
+/* ====== FOOTER ====== */
+.footer {
+text-align: center; margin-top: 30px;
+animation: popIn 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.4s both;
+}
+.footer-box {
+display: inline-block;
+background: white;
+border: 2.5px dashed #ffb3cc;
+border-radius: 24px;
+padding: 16px 30px;
+font-size: 17px; font-weight: 900; color: var(–pink);
+box-shadow: 0 4px 16px rgba(255,107,157,0.1);
+}
+.footer-box small { display: block; font-size: 10.5px; color: var(–text-soft); font-weight: 500; margin-top: 3px; letter-spacing: 1px; }
+@keyframes popIn { from { opacity:0; transform:scale(0.82); } to { opacity:1; transform:scale(1); } }
+@keyframes slideUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+<div class="page"><!-- HEADER --><div class="header">
+    <div class="header-badge">🩷 SLEEPOVER PLAN 🩷</div>
+    <div class="main-title">おとまり会🌙</div>
+    <div class="main-sub">タイムスケジュール ✦ 加古川</div>
+    <div class="header-icons">⭐ 🌸 💫 🌸 ⭐</div>
+  </div><!-- TABS --><div class="tabs">
+    <button class="tab-btn active" onclick="switchDay(1)">🌸 1日目</button>
+    <button class="tab-btn day2-btn" onclick="switchDay(2)">☀️ 2日目</button>
+  </div><!-- ===== DAY 1 ===== --><div class="day-panel active" id="day1">
+
+<!-- 集合 -->
+<div class="section-head"><div class="section-pill">▶ 夕方スタート</div><div class="section-line"></div></div>
+<div class="timeline">
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time">夕方</div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">🎀</div><div class="t-name">みんな集合！</div></div>
+      <div class="t-desc">やっとあえたー！！テンション爆あがり🥹💕</div>
+    </div>
+  </div>
+
+  <!-- 100均 -->
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time"></div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">🛒</div><div class="t-name">100均でお買いもの</div></div>
+      <div class="t-desc">お風呂グッズをゲットしにいこ〜！</div>
+      <div class="chips">
+        <span class="chip ylw">ダイソー🧴</span>
+        <span class="chip">セリア✨</span>
+        <span class="chip pur">3COINS🌟</span>
+      </div>
+      <button class="detail-toggle" onclick="toggleDetail(this)">
+        おすすめグッズをみる <span class="arrow">▼</span>
+      </button>
+      <div class="detail-body">
+        <div class="detail-inner">
+          <div class="mini-list">
+            <div class="mini-row">🫧 バスボール（色が変わる！香りつき）</div>
+            <div class="mini-row">🖍️ お風呂クレヨン（壁に描いて遊ぼ）</div>
+            <div class="mini-row">💡 LEDライト（浴室がキラキラ〜）</div>
+            <div class="mini-row">🌈 入浴剤（みんなで色を決めてね）</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 夕食 -->
+<div class="section-head"><div class="section-pill">▶ 夕食タイム</div><div class="section-line"></div></div>
+<div class="timeline">
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time">夕食</div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">🍣</div><div class="t-name">手巻き寿司🎊</div></div>
+      <div class="t-desc">自分で好きな具を選んで巻こ〜！創作寿司も作っちゃおw</div>
+      <div class="chips">
+        <span class="chip">🍣 マグロ・サーモン</span>
+        <span class="chip mnt">🥑 アボカド</span>
+        <span class="chip ylw">🧀 クリームチーズ</span>
+        <span class="chip pur">🍗 照り焼きチキン</span>
+      </div>
+      <button class="detail-toggle" onclick="toggleDetail(this)">
+        もっとみる（具材ぜんぶ） <span class="arrow">▼</span>
+      </button>
+      <div class="detail-body">
+        <div class="detail-inner">
+          <div class="mini-list">
+            <div class="mini-row">赤： マグロ・サーモン・カニカマ</div>
+            <div class="mini-row">緑： キュウリ・大葉・アボカド</div>
+            <div class="mini-row">黄： 錦糸卵・たくあん・コーン</div>
+            <div class="mini-row">洋風： クリームチーズ・照り焼きチキン・ツナマヨ</div>
+            <div class="mini-row">🌟 ケーキ風に型抜きして盛り付けてみて！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time"></div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">🍗</div><div class="t-name">唐揚げ・ピンチョス・スープ</div></div>
+      <div class="t-desc">映えるピンチョスタワーを作ろ〜📸</div>
+      <div class="chips">
+        <span class="chip ylw">🍗 唐揚げ</span>
+        <span class="chip">🍡 ピンチョス</span>
+        <span class="chip mnt">🍲 スープ</span>
+      </div>
+      <button class="detail-toggle" onclick="toggleDetail(this)">
+        ピンチョスのアイデア <span class="arrow">▼</span>
+      </button>
+      <div class="detail-body">
+        <div class="detail-inner">
+          <div class="mini-list">
+            <div class="mini-row">🍅 ミニトマト＋チーズ＋バジル</div>
+            <div class="mini-row">🥚 うずらの卵＋オリーブ＋ハム</div>
+            <div class="mini-row">🌟 タワーに積み上げると映え最高！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 夜 -->
+<div class="section-head"><div class="section-pill">▶ 夜のパーティー</div><div class="section-line"></div></div>
+<div class="timeline">
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time"></div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">🛁</div><div class="t-name">お風呂タイム</div></div>
+      <div class="t-desc">さっき買ったグッズで非日常体験！浴室がキラキラになるよ🫧✨</div>
+    </div>
+  </div>
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time"></div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">🍦</div><div class="t-name">アイスタイム＆語り会🗣️</div></div>
+      <div class="t-desc">お風呂あがりにアイス食べながらひみつの話しようw🙏<br>学校では言えないこととかも！</div>
+    </div>
+  </div>
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time">夜</div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">🎮</div><div class="t-name">ゲーム＆自由タイム</div></div>
+      <div class="t-desc">好きなだけ遊びまくろ〜！推し活グッズ作りもあるよ🩷</div>
+      <div class="chips">
+        <span class="chip">ゲーム🎮</span>
+        <span class="chip pur">ダンス動画撮影📱</span>
+        <span class="chip ylw">推し活グッズ作り✂️</span>
+      </div>
+      <button class="detail-toggle" onclick="toggleDetail(this)">
+        おすすめゲームリスト <span class="arrow">▼</span>
+      </button>
+      <div class="detail-body">
+        <div class="detail-inner">
+          <table class="mini-table">
+            <tr><th>ゲーム</th><th>どんなの？</th></tr>
+            <tr><td>🦑 ドラえもんだらけ</td><td>ハラハラ系バランスゲーム</td></tr>
+            <tr><td>🧩 ウボンゴ</td><td>頭脳系パズル、速さ勝負！</td></tr>
+            <tr><td>🟦 ブロックス</td><td>陣取り戦略ゲーム</td></tr>
+            <tr><td>🃏 ドブル</td><td>反射神経＆爆笑系カード</td></tr>
+            <tr><td>🐧 すみっコぐらし</td><td>みんな大好き、ほっこり系</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time">就寝</div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">😴</div><div class="t-name">おやすみ〜💤</div></div>
+      <div class="t-desc">ねれなくてもしゃべりながらOKw　静かにね🌙</div>
+    </div>
+  </div>
+
+</div>
+
+
+</div><!-- /day1 --><!-- ===== DAY 2 ===== --><div class="day-panel day2" id="day2">
+
+<div class="section-head day2"><div class="section-pill">▶ 朝スタート</div><div class="section-line"></div></div>
+<div class="timeline day2">
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time">朝食</div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">🥞</div><div class="t-name">朝ごはん☀️</div></div>
+      <div class="t-desc">活動前にしっかりエネルギーチャージ！</div>
+      <div class="chips">
+        <span class="chip ylw">🥞 ホットケーキ</span>
+        <span class="chip mnt">🥣 ポトフ</span>
+        <span class="chip pur">🍓 フルーツ</span>
+      </div>
+      <button class="detail-toggle day2" onclick="toggleDetail(this)">
+        栄養ポイント <span class="arrow">▼</span>
+      </button>
+      <div class="detail-body">
+        <div class="detail-inner day2">
+          <div class="mini-list day2">
+            <div class="mini-row day2">🥞 ホットケーキ → 脳のエネルギー源（ブドウ糖）</div>
+            <div class="mini-row day2">🥣 ポトフ → ビタミン・ミネラルたっぷり、身体を温める</div>
+            <div class="mini-row day2">🍓 フルーツ → ビタミンCで朝から元気！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-head day2"><div class="section-pill">▶ 午前の部</div><div class="section-line"></div></div>
+<div class="timeline day2">
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time">午前</div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">💄</div><div class="t-name">メイクタイム💅</div></div>
+      <div class="t-desc">プリクラに備えてかわいくなろ！「似合う色」教え合いっこしようw🪞</div>
+      <div class="chips">
+        <span class="chip pur">メイク💄</span>
+        <span class="chip">ヘアアレンジ💇</span>
+      </div>
+      <button class="detail-toggle day2" onclick="toggleDetail(this)">
+        おすすめヘアアレンジ <span class="arrow">▼</span>
+      </button>
+      <div class="detail-body">
+        <div class="detail-inner day2">
+          <div class="mini-list day2">
+            <div class="mini-row day2">🧅 たまねぎヘア：数ヶ所で結んでふっくらポップに！</div>
+            <div class="mini-row day2">🌀 くるりんぱ：結び目を内側に通すだけで編み込み風</div>
+            <div class="mini-row day2">🌟 三つ編みミックス：細い三つ編みをプラスして華やかに</div>
+            <div class="mini-row day2">🎀 リボン編み込み：カラーエクステ風で非日常感UP！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time"></div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">📸</div><div class="t-name">ゲーセンでプリクラ！</div></div>
+      <div class="t-desc">みんなでプリ撮りにいこ〜！！絶対かわいい🩷<br>データはすぐ共有してね！</div>
+      <div class="chips">
+        <span class="chip pur">プリクラ📸</span>
+        <span class="chip ylw">加古川北口エリア🎮</span>
+      </div>
+      <button class="detail-toggle day2" onclick="toggleDetail(this)">
+        プリクラのコツ <span class="arrow">▼</span>
+      </button>
+      <div class="detail-body">
+        <div class="detail-inner day2">
+          <div class="mini-list day2">
+            <div class="mini-row day2">📐 並び方は事前に決めとこ（背の順でもランダムでも）</div>
+            <div class="mini-row day2">🌈 服の色がかぶらないようにするとかわいい！</div>
+            <div class="mini-row day2">✨ 加工は目・肌・全身バランスをチェックして</div>
+            <div class="mini-row day2">💾 データ共有は解散前に必ずやること！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-head day2"><div class="section-pill">▶ お昼・解散</div><div class="section-line"></div></div>
+<div class="timeline day2">
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time">昼食</div>
+    <div class="t-card">
+      <div class="t-top"><div class="t-emoji">🍜</div><div class="t-name">冷やし中華🌈</div></div>
+      <div class="t-desc">最後のごはん！セルフトッピング形式でたのしく🥹</div>
+      <div class="chips">
+        <span class="chip mnt">🥒 リボンキュウリ</span>
+        <span class="chip ylw">⭐ 型抜きハム</span>
+        <span class="chip">🥚 錦糸卵</span>
+        <span class="chip pur">🍅 ミニトマト</span>
+      </div>
+      <button class="detail-toggle day2" onclick="toggleDetail(this)">
+        タレ3種 <span class="arrow">▼</span>
+      </button>
+      <div class="detail-body">
+        <div class="detail-inner day2">
+          <div class="mini-list day2">
+            <div class="mini-row day2">🍋 レモンだれ：さっぱり系、食欲ない時でもいける！</div>
+            <div class="mini-row day2">🥜 ごまだれ：まろやか系、クセになる味</div>
+            <div class="mini-row day2">🫙 醤油だれ：定番！まず間違いない</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="t-item">
+    <div class="t-dot"></div>
+    <div class="t-time">13:30</div>
+    <div class="t-card end-card">
+      <div class="t-top"><div class="t-emoji">👋</div><div class="t-name">解散〜！またね！</div></div>
+      <div class="t-desc">たのしすぎた〜🥹　また絶対やろうね！！🩷🩷<br>プリクラのデータ共有も忘れずに！</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 持ち物リスト -->
+<div class="section-head day2" style="margin-top:24px;"><div class="section-pill">▶ 持ちものリスト</div><div class="section-line"></div></div>
+<div class="checklist-card">
+  <div class="checklist-title">✦ チェックしながら準備しよ！</div>
+  <div class="check-grid" id="checklist">
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">👘 パジャマ</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">👗 翌日の着替え</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🪥 歯ブラシ</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🧴 スキンケア</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">💊 常備薬</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">📱 スマホ・充電器</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🎒 バッグ</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🩷 お財布</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">💄 メイク道具</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🎀 ヘアゴム・小物</span></div>
+  </div>
+</div>
+
+
+</div><!-- /day2 --><!-- FOOTER --><div class="footer">
+    <div class="footer-box">
+      🩷 最高の思い出つくろ〜！ 🩷
+      <small>BEST SLEEPOVER EVER ✨</small>
+    </div>
+  </div></div><!-- /page --><script>
+  function switchDay(n) {
+    document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('day' + n).classList.add('active');
+    document.querySelectorAll('.tab-btn')[n - 1].classList.add('active');
+  }
+
+  function toggleDetail(btn) {
+    btn.classList.toggle('open');
+    const body = btn.nextElementSibling;
+    body.classList.toggle('open');
+  }
+
+  function toggleCheck(item) {
+    item.classList.toggle('checked');
+  }
+</script></body>
+</html>
