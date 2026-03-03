@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -12,13 +11,18 @@
 body{font-family:'Zen Maru Gothic',sans-serif;background:linear-gradient(160deg,#ffe8f0 0%,#fdf0f8 40%,#f8eeff 70%,#fff0f8 100%);min-height:100vh;padding:28px 14px 70px;position:relative;overflow-x:hidden}
 #sakura-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .page{max-width:500px;margin:0 auto;position:relative;z-index:1}
-.header{text-align:center;margin-bottom:32px;animation:popIn .65s cubic-bezier(.34,1.56,.64,1) both}
+.header{text-align:center;margin-bottom:20px;animation:popIn .65s cubic-bezier(.34,1.56,.64,1) both}
 .header-badge{display:inline-block;background:linear-gradient(135deg,#ff6b9d,#b388ff);color:white;font-size:10px;font-weight:900;letter-spacing:2.5px;padding:5px 18px;border-radius:20px;margin-bottom:10px;box-shadow:0 4px 0 #c04080}
 .main-title{font-size:clamp(38px,10vw,58px);font-weight:900;color:#ff6b9d;text-shadow:3px 3px 0 #ffc0cb,6px 6px 0 rgba(255,182,193,.25);line-height:1.1;margin-bottom:4px}
 .main-sub{font-size:12px;color:#b07090;letter-spacing:2px;margin-bottom:10px}
-.header-icons{font-size:18px;letter-spacing:8px;opacity:.55}
+
+/* カウントダウン表示エリア */
+.countdown-area{background:rgba(255,255,255,0.6);border-radius:18px;padding:12px;margin-bottom:25px;border:1.5px dashed #ffb3cc;text-align:center;animation:slideUp .5s ease .1s both}
+.countdown-label{font-size:11px;font-weight:900;color:#ff6b9d;margin-bottom:4px;letter-spacing:1px}
+.countdown-timer{font-size:18px;font-weight:900;color:#3d1a2a;letter-spacing:1px}
+.countdown-timer span{color:#ff6b9d;font-size:24px;margin:0 2px}
+
 .tabs{display:flex;gap:8px;margin-bottom:22px;animation:slideUp .5s ease .2s both}
-/* ボタン: colorをtransitionに含めない */
 .tab-btn{flex:1;padding:10px 0;border-radius:16px;border:2.5px solid #ffb3cc;background:white;font-family:'Zen Maru Gothic',sans-serif;font-size:13px;font-weight:900;color:#b07090;cursor:pointer;transition:background .2s,border-color .2s,box-shadow .2s,transform .2s;-webkit-tap-highlight-color:transparent;outline:none}
 .tab-btn.day2-btn{border-color:#d4aaff}
 .tab-btn:not(.active):hover{background:#fff0f6;border-color:#ff6b9d;color:#ff6b9d}
@@ -56,7 +60,7 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:linear-gradient(160deg,
 .detail-toggle .arrow{transition:transform .25s;display:inline-block}
 .detail-toggle.open .arrow{transform:rotate(180deg)}
 .detail-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
-.detail-body.open{max-height:400px}
+.detail-body.open{max-height:450px}
 .detail-inner{margin-top:10px;padding-top:10px;border-top:1.5px dashed #ffcce0}
 .day2 .detail-inner{border-color:#e1bee7}
 .mini-list{display:flex;flex-direction:column;gap:5px;margin-top:6px}
@@ -67,7 +71,6 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:linear-gradient(160deg,
 .mini-table th{background:#fff0f6;color:#ff6b9d;padding:5px 8px;font-weight:900;text-align:left}
 .day2 .mini-table th{background:#f5f0ff;color:#9c27b0}
 .mini-table td{padding:5px 8px;color:#b07090;border-bottom:1px solid #ffeef5}
-.mini-table tr:last-child td{border-bottom:none}
 .t-card.end-card{background:linear-gradient(135deg,#ff6b9d,#ff9cc2);border:none;box-shadow:0 6px 22px rgba(255,107,157,.38),0 3px 0 #d94f7f}
 .t-card.end-card .t-name,.t-card.end-card .t-desc{color:white}
 .checklist-card{background:white;border-radius:20px;padding:16px 18px;margin-top:8px;border:1.5px solid #ffb3cc;box-shadow:0 4px 14px rgba(255,107,157,.08)}
@@ -93,7 +96,13 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:linear-gradient(160deg,
     <div class="header-badge">🩷 SLEEPOVER PLAN 🩷</div>
     <div class="main-title">おとまり会🌙</div>
     <div class="main-sub">タイムスケジュール ✦ 加古川</div>
-    <div class="header-icons">⭐ 🌸 💫 🌸 ⭐</div>
+  </div>
+
+  <div class="countdown-area">
+    <div class="countdown-label">✨ おとまり会まであと… ✨</div>
+    <div class="countdown-timer" id="timer">
+      <span id="days">0</span>日<span id="hours">0</span>時間<span id="minutes">0</span>分
+    </div>
   </div>
 
   <div class="tabs">
@@ -101,193 +110,128 @@ body{font-family:'Zen Maru Gothic',sans-serif;background:linear-gradient(160deg,
     <button class="tab-btn day2-btn" id="btn2" onclick="switchDay(2)">☀️ 2日目</button>
   </div>
 
-  <!-- DAY 1 -->
-
   <div class="day-panel active" id="day1">
     <div class="section-head"><div class="section-pill">▶ 夕方スタート</div><div class="section-line"></div></div>
     <div class="timeline">
-      <div class="t-item"><div class="t-dot"></div><div class="t-time">夕方</div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-time">16:00</div>
         <div class="t-card"><div class="t-top"><div class="t-emoji">🎀</div><div class="t-name">みんな集合！</div></div><div class="t-desc">やっとあえたー！！テンション爆あがり🥹💕</div></div>
       </div>
     </div>
-
-```
-<div class="section-head"><div class="section-pill">▶ 夕食タイム</div><div class="section-line"></div></div>
-<div class="timeline">
-  <div class="t-item"><div class="t-dot"></div><div class="t-time">夕食</div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">🍣</div><div class="t-name">手巻き寿司🎊</div></div>
-      <div class="t-desc">自分で好きな具を選んで巻こ〜！創作寿司も作っちゃおw</div>
-      <div class="chips"><span class="chip">🍣 マグロ・サーモン</span><span class="chip mnt">🥑 アボカド</span><span class="chip ylw">🧀 クリームチーズ</span><span class="chip pur">🍗 照り焼きチキン</span></div>
-      <button class="detail-toggle" onclick="toggleDetail(this)">もっとみる（具材ぜんぶ） <span class="arrow">▼</span></button>
-      <div class="detail-body"><div class="detail-inner"><div class="mini-list">
-        <div class="mini-row">赤： マグロ・サーモン・カニカマ</div>
-        <div class="mini-row">緑： キュウリ・大葉・アボカド</div>
-        <div class="mini-row">黄： 錦糸卵・たくあん・コーン</div>
-        <div class="mini-row">洋風： クリームチーズ・照り焼きチキン・ツナマヨ</div>
-        <div class="mini-row">🌟 ケーキ風に型抜きして盛り付けてみて！</div>
-      </div></div></div>
+    <div class="section-head"><div class="section-pill">▶ 夕食タイム</div><div class="section-line"></div></div>
+    <div class="timeline">
+      <div class="t-item"><div class="t-dot"></div><div class="t-time">夕食</div>
+        <div class="t-card">
+          <div class="t-top"><div class="t-emoji">🍣</div><div class="t-name">手巻き寿司🎊</div></div>
+          <div class="t-desc">好きな具を巻こ〜！創作寿司も作っちゃおw</div>
+          <div class="chips"><span class="chip">🍣 マグロ・サーモン</span><span class="chip mnt">🥑 アボカド</span><span class="chip ylw">🧀 クリチ</span><span class="chip pur">🍗 照り焼き</span></div>
+          <button class="detail-toggle" onclick="toggleDetail(this)">もっとみる（具材ぜんぶ） <span class="arrow">▼</span></button>
+          <div class="detail-body"><div class="detail-inner"><div class="mini-list">
+            <div class="mini-row">赤： マグロ・サーモン・カニカマ</div>
+            <div class="mini-row">緑： キュウリ・大葉・アボカド</div>
+            <div class="mini-row">黄： 錦糸卵・たくあん・コーン</div>
+            <div class="mini-row">洋： クリームチーズ・照り焼きチキン</div>
+            <div class="mini-row">🌟 ケーキ風に盛り付けるのもアリ！</div>
+          </div></div></div>
+        </div>
+      </div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
+        <div class="t-card">
+          <div class="t-top"><div class="t-emoji">🍗</div><div class="t-name">サイドメニュー</div></div>
+          <div class="t-desc">映えるピンチョスタワーを作ろ〜📸</div>
+          <div class="chips"><span class="chip ylw">🍗 唐揚げ</span><span class="chip">🍡 ピンチョス</span><span class="chip mnt">🍲 スープ</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="section-head"><div class="section-pill">▶ 夜のパーティー</div><div class="section-line"></div></div>
+    <div class="timeline">
+      <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
+        <div class="t-card">
+          <div class="t-top"><div class="t-emoji">♨️</div><div class="t-name">温泉でまったり〜！</div></div>
+          <div class="t-desc">みんなでゆっくり温泉タイム♪日頃の疲れを癒やそ🥰✨</div>
+        </div>
+      </div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-time">夜</div>
+        <div class="t-card">
+          <div class="t-top"><div class="t-emoji">🎮</div><div class="t-name">ゲーム＆語り会🗣️</div></div>
+          <div class="t-desc">推し活グッズ作りやゲームで盛り上がろ🩷</div>
+          <button class="detail-toggle" onclick="toggleDetail(this)">おすすめゲーム <span class="arrow">▼</span></button>
+          <div class="detail-body"><div class="detail-inner">
+            <table class="mini-table">
+              <tr><th>ゲーム</th><th>内容</th></tr>
+              <tr><td>ドラえもんだらけ</td><td>バランス勝負！</td></tr>
+              <tr><td>ウボンゴ</td><td>脳トレパズル🧩</td></tr>
+              <tr><td>ブロックス</td><td>陣取り戦略🟦</td></tr>
+            </table>
+          </div></div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">🍗</div><div class="t-name">唐揚げ・ピンチョス・スープ</div></div>
-      <div class="t-desc">映えるピンチョスタワーを作ろ〜📸</div>
-      <div class="chips"><span class="chip ylw">🍗 唐揚げ</span><span class="chip">🍡 ピンチョス</span><span class="chip mnt">🍲 スープ</span></div>
-      <button class="detail-toggle" onclick="toggleDetail(this)">ピンチョスのアイデア <span class="arrow">▼</span></button>
-      <div class="detail-body"><div class="detail-inner"><div class="mini-list">
-        <div class="mini-row">🍅 ミニトマト＋チーズ＋バジル</div>
-        <div class="mini-row">🥚 うずらの卵＋オリーブ＋ハム</div>
-        <div class="mini-row">🌟 タワーに積み上げると映え最高！</div>
-      </div></div></div>
-    </div>
-  </div>
-</div>
-
-<div class="section-head"><div class="section-pill">▶ 夜のパーティー</div><div class="section-line"></div></div>
-<div class="timeline">
-  <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">♨️</div><div class="t-name">温泉でまったり〜！</div></div>
-      <div class="t-desc">みんなでゆっくり温泉タイム♪日頃の疲れを癒やそ🥰✨</div>
-      <div class="chips"><span class="chip ylw">♨️ 温泉</span><span class="chip mnt">💆 まったり</span><span class="chip pur">📸 写真撮影</span></div>
-      <button class="detail-toggle" onclick="toggleDetail(this)">温泉の楽しみ方 <span class="arrow">▼</span></button>
-      <div class="detail-body"><div class="detail-inner"><div class="mini-list">
-        <div class="mini-row">🧖 湯上がりにスキンケアしながらまったり</div>
-        <div class="mini-row">🍦 温泉あがりのアイスは最高！</div>
-        <div class="mini-row">📸 浴衣や館内着で写真撮ろ〜</div>
-        <div class="mini-row">💤 のぼせないように休憩もしっかりね</div>
-      </div></div></div>
-    </div>
-  </div>
-  <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
-    <div class="t-card"><div class="t-top"><div class="t-emoji">🍦</div><div class="t-name">アイスタイム＆語り会🗣️</div></div><div class="t-desc">温泉あがりにアイス食べながらひみつの話しようw🙏<br>学校では言えないこととかも！</div></div>
-  </div>
-  <div class="t-item"><div class="t-dot"></div><div class="t-time">夜</div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">🎮</div><div class="t-name">ゲーム＆自由タイム</div></div>
-      <div class="t-desc">好きなだけ遊びまくろ〜！推し活グッズ作りもあるよ🩷</div>
-      <div class="chips"><span class="chip">ゲーム🎮</span><span class="chip pur">ダンス動画撮影📱</span><span class="chip ylw">推し活グッズ作り✂️</span></div>
-      <button class="detail-toggle" onclick="toggleDetail(this)">おすすめゲームリスト <span class="arrow">▼</span></button>
-      <div class="detail-body"><div class="detail-inner">
-        <table class="mini-table">
-          <tr><th>ゲーム</th><th>どんなの？</th></tr>
-          <tr><td>🦑 ドラえもんだらけ</td><td>ハラハラ系バランスゲーム</td></tr>
-          <tr><td>🧩 ウボンゴ</td><td>頭脳系パズル、速さ勝負！</td></tr>
-          <tr><td>🟦 ブロックス</td><td>陣取り戦略ゲーム</td></tr>
-          <tr><td>🃏 ドブル</td><td>反射神経＆爆笑系カード</td></tr>
-          <tr><td>🐧 すみっコぐらし</td><td>みんな大好き、ほっこり系</td></tr>
-        </table>
-      </div></div>
-    </div>
-  </div>
-  <div class="t-item"><div class="t-dot"></div><div class="t-time">就寝</div>
-    <div class="t-card"><div class="t-top"><div class="t-emoji">😴</div><div class="t-name">おやすみ〜💤</div></div><div class="t-desc">ねれなくてもしゃべりながらOKw　静かにね🌙</div></div>
-  </div>
-</div>
-```
-
-  </div>
-
-  <!-- DAY 2 -->
 
   <div class="day-panel day2" id="day2">
-    <div class="section-head day2"><div class="section-pill">▶ 朝スタート</div><div class="section-line"></div></div>
+    <div class="section-head day2"><div class="section-pill">▶ 朝〜午前</div><div class="section-line"></div></div>
     <div class="timeline day2">
       <div class="t-item"><div class="t-dot"></div><div class="t-time">朝食</div>
         <div class="t-card">
           <div class="t-top"><div class="t-emoji">🥞</div><div class="t-name">朝ごはん☀️</div></div>
-          <div class="t-desc">活動前にしっかりエネルギーチャージ！</div>
-          <div class="chips"><span class="chip ylw">🥞 ホットケーキ</span><span class="chip mnt">🥣 ポトフ</span><span class="chip pur">🍓 フルーツ</span></div>
-          <button class="detail-toggle day2" onclick="toggleDetail(this)">栄養ポイント <span class="arrow">▼</span></button>
-          <div class="detail-body"><div class="detail-inner day2"><div class="mini-list day2">
-            <div class="mini-row day2">🥞 ホットケーキ → 脳のエネルギー源（ブドウ糖）</div>
-            <div class="mini-row day2">🥣 ポトフ → ビタミン・ミネラルたっぷり、身体を温める</div>
-            <div class="mini-row day2">🍓 フルーツ → ビタミンCで朝から元気！</div>
-          </div></div></div>
+          <div class="t-desc">ホットケーキとポトフで朝から元気に！</div>
         </div>
       </div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-time">午前</div>
+        <div class="t-card">
+          <div class="t-top"><div class="t-emoji">💄</div><div class="t-name">メイク＆お花見🌸</div></div>
+          <div class="t-desc">可愛く準備してお花見ピクニックへGO！📸</div>
+        </div>
+      </div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-time">昼食</div>
+        <div class="t-card">
+          <div class="t-top"><div class="t-emoji">🍡</div><div class="t-name">屋台めし🎪</div></div>
+          <div class="t-desc">桜を見ながら好きなものを食べ歩き！</div>
+        </div>
+      </div>
+      <div class="t-item"><div class="t-dot"></div><div class="t-time">13:30</div>
+        <div class="t-card end-card"><div class="t-top"><div class="t-emoji">👋</div><div class="t-name">解散〜！またね！</div></div><div class="t-desc">たのしすぎた〜🥹 また絶対やろうね！！🩷🩷</div></div>
+      </div>
     </div>
-
-```
-<div class="section-head day2"><div class="section-pill">▶ 午前の部</div><div class="section-line"></div></div>
-<div class="timeline day2">
-  <div class="t-item"><div class="t-dot"></div><div class="t-time">午前</div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">💄</div><div class="t-name">メイクタイム💅</div></div>
-      <div class="t-desc">お花見に備えてかわいくなろ！「似合う色」教え合いっこしようw🪞</div>
-      <div class="chips"><span class="chip pur">メイク💄</span><span class="chip">ヘアアレンジ💇</span></div>
-      <button class="detail-toggle day2" onclick="toggleDetail(this)">おすすめヘアアレンジ <span class="arrow">▼</span></button>
-      <div class="detail-body"><div class="detail-inner day2"><div class="mini-list day2">
-        <div class="mini-row day2">🧅 たまねぎヘア：数ヶ所で結んでふっくらポップに！</div>
-        <div class="mini-row day2">🌀 くるりんぱ：結び目を内側に通すだけで編み込み風</div>
-        <div class="mini-row day2">🌟 三つ編みミックス：細い三つ編みをプラスして華やかに</div>
-        <div class="mini-row day2">🎀 リボン編み込み：カラーエクステ風で非日常感UP！</div>
-      </div></div></div>
+    <div class="section-head day2" style="margin-top:24px"><div class="section-pill">▶ 持ちものリスト</div><div class="section-line"></div></div>
+    <div class="checklist-card">
+      <div class="checklist-title">✦ チェックしながら準備！</div>
+      <div class="check-grid">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">👘 パジャマ</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">👗 翌日の服</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🪥 歯ブラシ</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🧴 スキンケア</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">📱 充電器</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🩷 お財布</span></div>
+      </div>
     </div>
-  </div>
-  <div class="t-item"><div class="t-dot"></div><div class="t-time"></div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">🌸</div><div class="t-name">お花見へ行こう！</div></div>
-      <div class="t-desc">桜の下でまったりピクニック🌸　映え写真もいっぱい撮ろ〜！</div>
-      <div class="chips"><span class="chip">🌸 お花見</span><span class="chip ylw">加古川周辺🗺️</span><span class="chip pur">📸 写真撮影</span></div>
-      <button class="detail-toggle day2" onclick="toggleDetail(this)">お花見のたのしみ方 <span class="arrow">▼</span></button>
-      <div class="detail-body"><div class="detail-inner day2"><div class="mini-list day2">
-        <div class="mini-row day2">🌸 桜の木の下でみんなで写真撮ろ！</div>
-        <div class="mini-row day2">🎀 レジャーシート敷いてまったりタイム</div>
-        <div class="mini-row day2">📱 リール動画撮影チャンス！</div>
-        <div class="mini-row day2">🌷 花びらキャッチできたらラッキー！</div>
-      </div></div></div>
-    </div>
-  </div>
-</div>
-
-<div class="section-head day2"><div class="section-pill">▶ お昼・解散</div><div class="section-line"></div></div>
-<div class="timeline day2">
-  <div class="t-item"><div class="t-dot"></div><div class="t-time">昼食</div>
-    <div class="t-card">
-      <div class="t-top"><div class="t-emoji">🍡</div><div class="t-name">屋台でお昼ごはん🎪</div></div>
-      <div class="t-desc">好きなもの好きなだけ食べよ〜！お花見気分で食べ歩きも最高🥹</div>
-      <div class="chips"><span class="chip ylw">🍡 みたらし団子</span><span class="chip">🥞 クレープ</span><span class="chip pur">🍢 おでん</span><span class="chip mnt">🌽 焼きとうもろこし</span></div>
-      <button class="detail-toggle day2" onclick="toggleDetail(this)">おすすめ屋台メニュー <span class="arrow">▼</span></button>
-      <div class="detail-body"><div class="detail-inner day2"><div class="mini-list day2">
-        <div class="mini-row day2">🍡 みたらし団子・桜餅 → お花見の定番！</div>
-        <div class="mini-row day2">🥞 クレープ → 好きな具でカスタムして</div>
-        <div class="mini-row day2">🍢 おでん・唐揚げ → ガッツリ食べたい子はこれ</div>
-        <div class="mini-row day2">🍦 桜ソフトクリーム → 映え最強！絶対食べて！</div>
-      </div></div></div>
-    </div>
-  </div>
-  <div class="t-item"><div class="t-dot"></div><div class="t-time">13:30</div>
-    <div class="t-card end-card"><div class="t-top"><div class="t-emoji">👋</div><div class="t-name">解散〜！またね！</div></div><div class="t-desc">たのしすぎた〜🥹　また絶対やろうね！！🩷🩷<br>写真はすぐ共有してね！</div></div>
-  </div>
-</div>
-
-<div class="section-head day2" style="margin-top:24px"><div class="section-pill">▶ 持ちものリスト</div><div class="section-line"></div></div>
-<div class="checklist-card">
-  <div class="checklist-title">✦ チェックしながら準備しよ！</div>
-  <div class="check-grid">
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">👘 パジャマ</span></div>
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">👗 翌日の着替え</span></div>
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🪥 歯ブラシ</span></div>
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🧴 スキンケア</span></div>
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">💊 常備薬</span></div>
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">📱 スマホ・充電器</span></div>
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🎒 バッグ</span></div>
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🩷 お財布</span></div>
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">💄 メイク道具</span></div>
-    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">🎀 ヘアゴム・小物</span></div>
-  </div>
-</div>
-```
-
   </div>
 
   <div class="footer"><div class="footer-box">🩷 最高の思い出つくろ〜！ 🩷<small>BEST SLEEPOVER EVER ✨</small></div></div>
 </div>
 
 <script>
-// アクティブボタンのスタイルをJSで直接管理（CSS transition/詳細度の問題を完全回避）
+// --- カウントダウン機能 (2026年3月28日 16:00) ---
+const eventDate = new Date(2026, 2, 28, 16, 0).getTime(); 
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const diff = eventDate - now;
+  if (diff <= 0) {
+    document.getElementById('timer').innerHTML = "✨ おとまり会当日だよ！楽しもう🩷 ✨";
+    return;
+  }
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  document.getElementById('days').innerText = d;
+  document.getElementById('hours').innerText = h;
+  document.getElementById('minutes').innerText = m;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// --- タブ切り替え ---
 function applyActiveStyle(btn, isDay2) {
   if (isDay2) {
     btn.style.cssText += ';background:linear-gradient(135deg,#b388ff,#ce93d8)!important;color:white!important;border-color:#b388ff!important;box-shadow:0 4px 0 #7c4daa,0 6px 18px rgba(179,136,255,.3);transform:translateY(-2px)';
@@ -299,14 +243,13 @@ function clearActiveStyle(btn) {
   btn.style.background=''; btn.style.color=''; btn.style.borderColor=''; btn.style.boxShadow=''; btn.style.transform='';
 }
 function switchDay(n) {
-  document.querySelectorAll('.day-panel').forEach(function(p){p.classList.remove('active')});
-  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');clearActiveStyle(b)});
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => {b.classList.remove('active'); clearActiveStyle(b)});
   document.getElementById('day'+n).classList.add('active');
-  var btn = document.querySelectorAll('.tab-btn')[n-1];
+  const btn = document.getElementById('btn'+n);
   btn.classList.add('active');
   applyActiveStyle(btn, n===2);
 }
-// 初期状態を即時適用（DOMContentLoadedを待たずに実行）
 applyActiveStyle(document.getElementById('btn1'), false);
 
 function toggleDetail(btn) {
@@ -315,26 +258,25 @@ function toggleDetail(btn) {
 }
 function toggleCheck(item) { item.classList.toggle('checked'); }
 
-// 桜アニメーション
+// --- 桜アニメーション ---
 (function(){
-  var cv=document.getElementById('sakura-canvas'),ctx=cv.getContext('2d'),W,H,ps=[];
+  const cv=document.getElementById('sakura-canvas'),ctx=cv.getContext('2d');
+  let W,H,ps=[];
   function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight}
   resize(); window.addEventListener('resize',resize);
-  var cols=['rgba(255,182,193,','rgba(255,160,180,','rgba(255,200,215,','rgba(250,145,168,'];
+  const cols=['rgba(255,182,193,','rgba(255,160,180,','rgba(255,200,215,','rgba(250,145,168,'];
   function np(ry){return{x:Math.random()*W,y:ry?Math.random()*H:-20,sz:Math.random()*6+4,vy:Math.random()*1.2+0.4,vx:Math.random()*1.2-0.4,a:Math.random()*Math.PI*2,ra:(Math.random()-.5)*.04,op:Math.random()*.45+.25,wb:Math.random()*Math.PI*2,ws:Math.random()*.04+.01,c:cols[Math.floor(Math.random()*4)]}}
-  for(var i=0;i<28;i++)ps.push(np(true));
+  for(let i=0;i<28;i++)ps.push(np(true));
   function draw(){
     ctx.clearRect(0,0,W,H);
     if(ps.length<38&&Math.random()<.06)ps.push(np(false));
-    ps=ps.filter(function(p){return p.y<H+30&&p.x>-30&&p.x<W+30});
-    ps.forEach(function(p){
+    ps=ps.filter(p => p.y<H+30&&p.x>-30&&p.x<W+30);
+    ps.forEach(p => {
       p.wb+=p.ws;p.x+=p.vx+Math.sin(p.wb)*.6;p.y+=p.vy;p.a+=p.ra;
       ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.globalAlpha=p.op;
       ctx.fillStyle=p.c+p.op+')';
-      ctx.beginPath();var s=p.sz;
+      ctx.beginPath();const s=p.sz;
       ctx.moveTo(0,-s);ctx.bezierCurveTo(s*.6,-s*.8,s*.8,s*.2,0,s);ctx.bezierCurveTo(-s*.8,s*.2,-s*.6,-s*.8,0,-s);ctx.fill();
-      ctx.globalAlpha=p.op*.25;ctx.strokeStyle='rgba(220,100,130,1)';ctx.lineWidth=.4;
-      ctx.beginPath();ctx.moveTo(0,-s*.85);ctx.lineTo(0,s*.85);ctx.stroke();
       ctx.restore();
     });
     requestAnimationFrame(draw);
@@ -342,6 +284,5 @@ function toggleCheck(item) { item.classList.toggle('checked'); }
   draw();
 })();
 </script>
-
 </body>
 </html>
